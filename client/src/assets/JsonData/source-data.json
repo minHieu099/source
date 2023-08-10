@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "name": "BBC News Tiếng Việt",
+    "scanned": "1196",
+    "type": "danger",
+    "reactives": 625,
+    "url": "https://www.youtube.com/c/bbctiengviet"
+  },
+  {
+    "id": 2,
+    "name": "Việt Tân",
+    "scanned": "2896",
+    "type": "danger",
+    "reactives": 625,
+    "url": "https://www.youtube.com/c/VietTan"
+  },
+  {
+    "id": 3,
+    "name": "VOA Tiếng Việt",
+    "scanned": "722",
+    "type": "danger",
+    "reactives": 625,
+    "url": "https://www.youtube.com/c/VOATiengViet"
+  },
+  {
+    "id": 4,
+    "name": "TRÍ TUỆ TỎA SÁNG",
+    "scanned": "652",
+    "type": "primary",
+    "reactives": 625,
+    "url": "https://www.facebook.com/hocvienkythuat"
+  },
+  {
+    "id": 5,
+    "name": "RFA Tiếng Việt",
+    "scanned": "1196",
+    "type": "danger",
+    "reactives": 625,
+    "url": "https://www.youtube.com/user/RFAVietnamese"
+  },
+  {
+    "id": 6,
+    "name": "VTV24",
+    "scanned": "2101",
+    "type": "danger",
+    "reactives": 625,
+    "url": "https://www.youtube.com/c/vtv24"
+  }
+]

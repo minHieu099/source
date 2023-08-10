@@ -1,0 +1,33 @@
+[
+    {
+        "display_name": "Dashboard",
+        "route": "/",
+        "icon": "bx bx-bar-chart-alt"
+    },
+    {
+        "display_name": "Quản lý chủ đề",
+        "route": "/tag",
+        "icon": "bx bx-at"
+    },
+    {
+        "display_name": "Quản lý kênh",
+        "route": "/source",
+        "icon": "bx bx-data"
+    },
+    {
+        "display_name": "Quản lý dữ liệu",
+        "route": "/video",
+        "icon": "bx bx-book-content"
+    },
+    {
+        "display_name": "Sự kiện nổi bật",
+        "route": "/stream",
+        "icon": "bx bx-fast-forward"
+    },
+    {
+        "display_name": "Cài đặt",
+        "route": "/settings",
+        "icon": "bx bx-cog"
+    }
+]
+

@@ -1,0 +1,13 @@
+.btnDashboard {
+    background-color: transparent;
+    color: var(--txt-color);
+    border: 1px solid var(--txt-color);
+    border-radius: 10px;
+    padding: 10px 15px;
+    font-size: 16px;
+}
+
+.btnDashboard:hover {
+    color: var(--main-color);
+    border-color: var(--main-color)
+}

@@ -1,0 +1,28 @@
+.filter__button {
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--main-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+    cursor: pointer;
+
+}
+
+.filter__button>p {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    color: var(--txt-color);
+    border-radius: var(--border-radius);
+
+}
+
+.filter__button>i {
+    font-size: 1.5rem;
+    align-self: center;
+    padding: 10px 0 10px 10px;
+}

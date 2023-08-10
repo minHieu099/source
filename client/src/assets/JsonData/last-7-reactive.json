@@ -1,0 +1,10 @@
+[
+    { "id": 1, "weekday": "Thu", "count": 120},
+    { "id": 2, "weekday": "Fri", "count": 146},
+    { "id": 3, "weekday": "Sat", "count": 90},
+    { "id": 4, "weekday": "Sun", "count": 52},
+    { "id": 5, "weekday": "Mon", "count": 176},
+    { "id": 6, "weekday": "Tue", "count": 220},
+    { "id": 7, "weekday": "Today", "count": 31}
+  ]
+  

@@ -1,0 +1,36 @@
+.search {
+    position: relative;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--main-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+
+}
+
+.search>input {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    padding: 10px 60px 10px 20px;
+    font-size: 1rem;
+    color: var(--txt-color);
+    border-radius: var(--border-radius);
+
+}
+
+.search>i {
+    font-size: 1.5rem;
+    position: absolute;
+    right: 20px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.search i:hover {
+    transform: scale(1.2) rotate(45deg);
+    cursor: pointer;
+    color: var(--main-color);
+}

@@ -1,0 +1,77 @@
+.cut-text { 
+    display: block;
+    max-width: 98%;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+}
+.justify-div {
+    display: flex;
+    justify-content: space-between;
+}
+.status-card {
+    align-items: center;
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: var(--border-radius);
+    background-color: var(--main-bg);
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+    z-index: 1;
+    position: relative;
+    min-width: 240px;
+}
+.status-card_icon {
+    width: 30%;
+    height: 100%;
+    font-size: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* margin-right: 4px; */
+    z-index: 1;
+}
+.status-card_title {
+    display: flex;
+    align-items: center;
+    white-space: no-wrap;
+    width: 70%; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    z-index: 1; 
+    font-size: 1.5em;
+    font-weight: bold;
+}
+.status-card_title p {
+    margin: 0;
+}
+.status-card_info{
+    flex-grow: 1;
+    z-index: 1; 
+    padding: 10px 20px 0;
+}
+.status-card::before {
+    content: "";
+    width: 100%;
+    padding-top: 100%;
+    background-image: linear-gradient(
+        to top right,
+        var(--main-color),
+        var(--second-color)
+    );
+    position: absolute;
+    left:-100%;
+    top:-100%;
+    transform: scale(0);
+    transition: transform 0.5s ease 0s;
+}
+.status-card:hover::before {
+    transform: scale(3);
+}
+.status-card:hover {
+    color: var(--txt-white);
+    cursor: pointer;
+}
+.pr-0-5 {
+    padding-right: 0.5rem;
+}
