@@ -56,7 +56,7 @@ tagRouter.post("/", async (req, res) => {
       return res.status(400).json({ message: "Tag already exists" });
     }
     // Tạo tag mới và lưu vào cơ sở dữ liệu
-    const newTag = new Tag({ vd_tag: tagValue });
+    const newTag = new Tag({ vd_tag: tagValue, crawled: false });
     await newTag.save();
     // Trả về thông tin của tag mới đã tạo
     res.json(newTag);
