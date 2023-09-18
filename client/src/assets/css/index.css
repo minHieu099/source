@@ -131,6 +131,15 @@ input:focus {
   height: 100%;
   padding: 10px 30px 30px;
 }
+.card__header select{
+  font-size: 20px;
+  width: fit-content;
+  padding: 10px 10px;
+  border-radius: 10px;
+  color: white;
+  background: var(--second-color);
+  border: none;
+}
 .light-background {
   background-color: var(--main-bg-light);
   color: #000;
@@ -220,6 +229,7 @@ h2 {
 }
 .video-details__card {
   padding: 20px 30px;
+  margin-bottom: 10px;
 }
 .btn-gotovideo {
   font-size: 16px;
@@ -243,4 +253,33 @@ h2 {
 }
 .fixed_video_card {
   height: 7rem;
+}
+.comment {
+  display: flex;
+  margin-bottom: 16px;
+}
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+.comment-content {
+}
+.comment-username {
+  font-weight: bold;
+  margin-bottom: 4px;
+  display: inline-block;
+  padding-right: 10px;
+}
+.comment-publishedat {
+  display: inline-block;
+  font-size: 16px;
+}
+.comment-text {
+  margin-bottom: 8px;
+}
+.replies {
+  margin-top: 15px;
+  padding-left: 0px; /* Để lùi bình luận phản hồi */
 }

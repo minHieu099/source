@@ -118,4 +118,19 @@ channelRouter.get("/:channelId", async (req, res) => {
   }
 });
 
+//delete channel
+channelRouter.delete("/:channelId", async (req, res) => {
+  try {
+    const channelId = req.params.channelId;
+    const deletedChannel = await Channel.findOneAndDelete({ channel_id: channelId });
+    if (!deletedChannel) {
+      return res.status(404).json({ message: "Channel not found " + channelId });
+    }
+    res.json({ message: "Channel deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 export default channelRouter;

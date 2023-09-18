@@ -43,3 +43,21 @@ export const channelCreateReducer = (state = {}, action) => {
         return state;
     }
   };
+
+
+// Reducer delete channel
+export const channelDeleteReducer = (state = {}, action) => {
+    switch (action.type) {
+      case "CHANNEL_DELETE_REQUEST":
+        return { loading: true };
+      case "CHANNEL_DELETE_SUCCESS":
+        return { loading: false, success: true };
+      case "CHANNEL_DELETE_FAIL":
+        return { loading: false, error: action.payload };
+      case "CHANNEL_DELETE_RESET":
+        return {};
+      default:
+        return state;
+    }
+  };
+

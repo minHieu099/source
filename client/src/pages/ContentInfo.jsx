@@ -14,6 +14,20 @@ import Message from "../components/loadingError/Error";
 
 import "./Pages.css";
 
+// Component hiển thị một bình luận
+function Comment(props) {
+  return (
+    <div className="comment">
+      <img src={props.authorProfileImageUrl} alt={`${props.authorDisplayName}'s avatar`} className="avatar" />
+      <div className="comment-content">
+        <div className="comment-username">{props.authorDisplayName}</div>
+        <div className="comment-publishedat">{props.publishedAt.slice(0, 10)}</div>
+        <div className="comment-text"><p dangerouslySetInnerHTML={{ __html: props.textDisplay }} /></div>
+      </div>
+    </div>
+  );
+}
+
 const ContentInfo = () => {
   const { videoid } = useParams();
 
@@ -23,12 +37,17 @@ const ContentInfo = () => {
 
   const { loading, video, error } = videoDetail;
 
-  const [isDetected, setIsDetected] = useState(false);
+  const [selection, setSelection] = useState('0');
 
   const handleToggleFollow = () => {
 
     dispatch(toggleFollow(video._id, !video.vd_followed));
   };
+
+  const handleChange = (event) => {
+    const selectedValue = event.target.value;
+    setSelection(selectedValue);
+  }
 
   useEffect(() => {
     dispatch(getVideoDetails(videoid));
@@ -46,7 +65,7 @@ const ContentInfo = () => {
         <div>
           <p className="section__header page-header">Video Details</p>
           <div className="col-12">
-            <div className="card row video-details__card">
+            <div className="card video-details__card">
               <div className="card__body card__body-p">
                 <p className="text-bold">
                   Title:{" "}
@@ -70,16 +89,16 @@ const ContentInfo = () => {
                       video.vd_label === 0
                         ? "primary"
                         : video.vd_label === 1
-                        ? "success"
-                        : "danger"
+                          ? "success"
+                          : "danger"
                     }
                     clickable={"none"}
                     content={
                       video.vd_label === 2
                         ? "Tiêu cực"
                         : video.vd_label === 1
-                        ? "Tích cực"
-                        : "Trung tính"
+                          ? "Tích cực"
+                          : "Trung tính"
                     }
                   />
                 </div>
@@ -130,6 +149,30 @@ const ContentInfo = () => {
                 </div>
               </div>
             </div>
+            {video.vd_followed === 1 && <div className="card video-details__card">
+              <div className="card__body card__body-p">
+                <p className="text-bold">
+                  Điều hướng liên quan:
+                </p>
+                {video.vd_links && video.vd_links.length > 0 ? (
+                  video.vd_links.map((link, index) => (
+                    <a href={link}><p>{link}</p></a>
+                  ))
+                ) : (
+                  <p>Chưa có thông tin</p>
+                )}
+                {video.vd_hashtags && video.vd_hashtags.length > 0 && (
+                  <p className="text-bold">
+                    Hashtags:
+                  </p>
+                )}
+                {video.vd_hashtags && video.vd_hashtags.length > 0 &&
+                  video.vd_hashtags.map((hashtag, index) => (
+                    <span>{hashtag} </span>
+                  ))
+                }
+              </div>
+            </div>}
             <div className="card__header">
               <p>Embed Video</p>
             </div>
@@ -146,41 +189,46 @@ const ContentInfo = () => {
                 ></iframe>
               </div>
             </div>
-            <div className="card__header justify-div">
-              <p>Information Extraction</p>
-              {!isDetected ? (
-                <button
-                  className="btn btn-view btn-gotovideo mb-1"
-                  onClick={() => {
-                    setIsDetected(!isDetected);
-                  }}
-                >
-                  <i className="bx bx-transfer mr-0-5"></i>
-                  Dectect Objects
-                </button>
-              ) : (
-                <button
-                  className="btn btn-delete btn-gotovideo mb-1"
-                  onClick={() => {
-                    setIsDetected(!isDetected);
-                  }}
-                >
-                  <i className="bx bx-transfer mr-0-5"></i>
-                  Plain Text
-                </button>
-              )}
+            <div className="card__header justify-div" style={{ alignItems: 'baseline' }}>
+              <p>Thông tin video</p>
+              <select value={selection} onChange={handleChange}>
+                <option value='0'>Nội dung</option>
+                <option value='1'>Xem nhanh</option>
+                <option value='2'>Trích xuất thông tin</option>
+              </select>
+
             </div>
             <div className="card row">
               <div className="card__body">
-                {isDetected ? <CardNote /> : null}
+                {selection === '2' && <CardNote />}
                 <p
                   className="text-content"
                   dangerouslySetInnerHTML={{
-                    __html: isDetected ? video.vd_highlight : video.vd_content,
+                    __html: selection === '2' ? video.vd_highlight : video.vd_content,
                   }}
                 ></p>
               </div>
             </div>
+            {video.vd_followed === 1 &&
+              <div>
+                <div className="card__header">
+                  <p>Các bình luận</p>
+                </div>
+                <div className="card row">
+                  <div className="card__body">
+                    <div className="comment-list">
+                      {video.vd_comments && video.vd_comments.length > 0 ? (
+                        video.vd_comments.map((comment, index) => (
+                          <Comment key={index} {...comment} />
+                        ))
+                      ) : (
+                        <p>Chưa có thông tin</p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            }
           </div>
         </div>
       )}

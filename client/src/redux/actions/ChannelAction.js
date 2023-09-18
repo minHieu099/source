@@ -67,3 +67,21 @@ export const getChannelDetail = (channelid) => async (dispatch) => {
     }
   };
   
+  // DELETE CHANNEL
+
+  export const deleteChannel = (channelId) => async (dispatch) => {
+    try {
+      dispatch({ type: "CHANNEL_DELETE_REQUEST" });
+      const { data } = await axios.delete(`${URL}/api/channels/${channelId}`);
+      dispatch({ type: "CHANNEL_DELETE_SUCCESS", payload: data});
+    } catch (error) {
+      const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+      dispatch({
+        type: "CHANNEL_CREATE_FAIL",
+        payload: message,
+      });
+    }
+  };

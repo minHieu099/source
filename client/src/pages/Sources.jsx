@@ -7,16 +7,14 @@ import Table from "../components/table/Table";
 
 // redux
 import { useDispatch, useSelector } from "react-redux";
-import { getListChannel, createChannel } from "../redux/actions/ChannelAction";
+import { getListChannel, createChannel, deleteChannel } from "../redux/actions/ChannelAction";
 
 // Handle Error
 import Loading from "../components/loadingError/Loading";
 import Message from "../components/loadingError/Error";
-import Toast from "../components/loadingError/Toast";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // 
-import tagList from "../assets/JsonData/source-data.json";
 import "./Pages.css";
 
 const customerTableHead = [
@@ -74,6 +72,32 @@ const Sources = () => {
     }
     dispatch(getListChannel());
   }, [dispatch, successCreateChannel, errorCreateChannel]);
+
+  //  State del source
+  const channelDeleteState = useSelector((state) => state.channelDelete);
+  const {
+    loading: loadingDeleteChannel,
+    error: errorDeleteChannel,
+    success: successDeleteChannel,
+  } = channelDeleteState;
+
+  //  State del tag
+  useEffect(() => {
+    if (successDeleteChannel) {
+      toast.success("Channel deleted successfully", ToastObjects);
+      setChannelId("");
+      setOpenDelete(false);
+      dispatch({ type: "CHANNEL_DELETE_RESET" });
+    }
+    if (errorDeleteChannel) {
+      toast.error(errorDeleteChannel, ToastObjects);
+      setChannelId("");
+      setOpenDelete(false);
+      dispatch({ type: "CHANNEL_DELETE_FAIL" });
+    }
+    dispatch(getListChannel());
+  }, [dispatch, successDeleteChannel, errorDeleteChannel]);
+
   const renderHead = (item, index) => <th key={index}>{item}</th>;
 
   //  coding layout
@@ -103,7 +127,7 @@ const Sources = () => {
       <td>
         <div className="flex-center">
           <button
-            onClick={() => alert("Chức năng đang xây dựng")}
+            onClick={() => showModalDelete(item.channel_id)}
             className="btn btn-delete"
           >
             <i className="bx bx-user-x mr-0-5"></i>Unfollow
@@ -121,12 +145,18 @@ const Sources = () => {
 
   const [channelValue, setChannelValue] = useState("");
 
+  const [channelId, setChannelId] = useState("");
+
   const showModalAdd = () => {
     setOpenAdd(true);
   };
   const addChannelHandle = (e) => {
     e.preventDefault();
     dispatch(createChannel(channelValue));
+  };
+  const delChannelHandle = (e) => {
+    e.preventDefault();
+    dispatch(deleteChannel(channelId));
   };
 
   const handleOkAdd = () => {
@@ -141,7 +171,8 @@ const Sources = () => {
     setOpenAdd(false);
   };
 
-  const showModalDelete = () => {
+  const showModalDelete = (channel_id) => {
+    setChannelId(channel_id);
     setOpenDelete(true);
   };
 
@@ -152,7 +183,7 @@ const Sources = () => {
       setConfirmLoading(false);
     }, 2000);
   };
-
+  
   const handleCancelDelete = () => {
     setOpenDelete(false);
   };
@@ -245,6 +276,9 @@ const Sources = () => {
                   },
                   onMouseEnter: (e) => (e.target.style.backgroundColor = "#6b6a6a"),
                   onMouseLeave: (e) => (e.target.style.backgroundColor = "#959595"),
+                  onClick: (e) => {
+                    delChannelHandle(e);
+                  }      
                 }}
                 cancelButtonProps={{
                   className: "cancel-btn"
