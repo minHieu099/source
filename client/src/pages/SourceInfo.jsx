@@ -60,7 +60,7 @@ const chartOption2 = {
   },
 };
 
-const contentTableHead = ["#", "url", "content", "type", "view details"];
+const contentTableHead = ["#", "Video", "Nội dung", "Loại", "Chi tiết của video"];
 
 const SourceInfo = () => {
   const { channelid } = useParams();
@@ -139,7 +139,7 @@ const SourceInfo = () => {
             (
               <div>
                 <p className="section__header page-header">
-                  Source Manager / Source:{" "}
+                  Quản lý kênh / Kênh{" "}
                   <span className="tag-span">{channelData["channel_name"]}</span>
                 </p>
                 <div className="col-12">
@@ -148,31 +148,27 @@ const SourceInfo = () => {
                     <div className="col-4 col-md-12">
                       <div className="card__body card__body-p">
                         <p>
-                          Source ID:{" "}
-                          <span className="text-bold tag-span">{channelid}</span>
-                        </p>
-                        <p>
-                          Source Name:{" "}
+                          Tên kênh:{" "}
                           <span className="text-bold tag-span">{channelData["channel_name"]}</span>
                         </p>
                         <p>
-                          Source URL:{" "}
+                          Liên kết khả dụng:{" "}
                           <span className="text-bold tag-span">
                             <a href={channelData["channel_link"]}>{channelData["channel_link"]}</a>
                           </span>
                         </p>
                         <p>
-                          All Scanned Contents:{" "}
+                          Video đăng tải:{" "}
                           <span className="text-bold tag-span">
                             {channelData["video_count"]}
                           </span>
                         </p>
                         <p>
-                          Scanned Contents In Last 1 Week:{" "}
+                          Video đăng tải ngày gần nhất:{" "}
                           <span className="text-bold tag-span">11</span>
                         </p>
                         <p>
-                          Reactive In Last 1 Week:{" "}
+                          Số lượt tương tác trong ngày:{" "}
                           <span className="text-bold tag-span">
                             {50}
                           </span>
@@ -202,7 +198,7 @@ const SourceInfo = () => {
                     </div>
                   </div>
                   <div className="card__header">
-                    <p>Scanned Contents</p>
+                    <p>Video của kênh</p>
                   </div>
                   <div className="card row">
                     <div className="col-12">

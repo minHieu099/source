@@ -23,11 +23,7 @@
         "display_name": "Sự kiện nổi bật",
         "route": "/stream",
         "icon": "bx bx-fast-forward"
-    },
-    {
-        "display_name": "Cài đặt",
-        "route": "/settings",
-        "icon": "bx bx-cog"
     }
+
 ]
 

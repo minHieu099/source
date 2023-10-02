@@ -48,7 +48,7 @@ const TopNav = () => {
   return (
     <div className="topnav">
       <button className="btn btn-add" onClick={refreshPage}>
-        <i className="bx bx-refresh mr-0-5"></i>Reload
+        <i className="bx bx-refresh mr-0-5"></i>Làm mới
       </button>
       <div className="topnav__right">
         <div className="topnav__right-item">

@@ -40,7 +40,7 @@ dashboardRouter.get("/", async (req, res) => {
         });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: "Internal Server Error" });
+        res.status(500).json({ message: "Có lỗi trong quá trình xử lý" });
     }
 })
 

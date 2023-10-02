@@ -100,23 +100,23 @@ const TagInfo = () => {
           error ? (<div> <Message variant="alert-danger">{error}</Message></div>) :
             <div>
               <p className="section__header page-header">
-                Tag Manager / Tag: <span className="tag-span">{tagData["vd_tag"]}</span>
+                Quản lý chủ đề / Chủ đề: <span className="tag-span">{tagData["vd_tag"]}</span>
               </p>
               <div className="col-12">
                 <div className="card row">
                   <div className="col-4 col-md-12">
                     <div className="card__body card__body-p">
                       <p>
-                        Tag Name:{" "}
+                        Tên chủ đề:{" "}
                         <span className="text-bold tag-span">{tagData["vd_tag"]}</span>
                       </p>
                       <p>
-                        All Scanned Contents:{" "}
+                        Nội dung thu được:{" "}
                         <span className="text-bold tag-span">{
                           tagData["countVideos"] ? tagData["countVideos"]:0 }</span>
                       </p>
                       <p>
-                        Scanned Videos In Last 1 Year:{" "}
+                        Nội dung thu được gần đây:{" "}
                         <span className="text-bold tag-span">20</span>
                       </p>
                     </div>
@@ -144,7 +144,7 @@ const TagInfo = () => {
                   </div>
                 </div>
                 <div className="card__header">
-                  <p>Tag analysis</p>
+                  <p>Phân tích nội dung</p>
                 </div>
                 <div className="card row">
                   <div className="col-4 col-md-12">
@@ -172,7 +172,7 @@ const TagInfo = () => {
                   </div>
                 </div>
                 <div className="card__header">
-                  <p>Top videos of Tag</p>
+                  <p>Top các nội dung liên quan</p>
                 </div>
                 <VideoGrid limit={8} videos={tagData["videos"]?tagData["videos"]: [] } />
               </div>

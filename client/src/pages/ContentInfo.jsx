@@ -68,21 +68,21 @@ const ContentInfo = () => {
             <div className="card video-details__card">
               <div className="card__body card__body-p">
                 <p className="text-bold">
-                  Title:{" "}
+                  Tiêu đề:{" "}
                   <span className="text-bold tag-span">{video.vd_title}</span>
                 </p>
                 <p className="text-bold">
-                  Channel:{" "}
+                  Kênh:{" "}
                   <span className="text-bold tag-span">{video.vd_channel}</span>
                 </p>
                 <p className="text-bold">
-                  Published Date:{" "}
+                  Thời gian phát hành :{" "}
                   <span className="text-bold tag-span">
                     {video.vd_publishAt}
                   </span>
                 </p>
                 <div className="badge-div">
-                  <p className=" text-bold badge-line">Type: </p>
+                  <p className=" text-bold badge-line">Loại: </p>
                   <Badge
                     className="text-bold"
                     type={
@@ -103,7 +103,7 @@ const ContentInfo = () => {
                   />
                 </div>
                 <p className="text-bold">
-                  Reactive Number:{" "}
+                  Lượt tương tác:{" "}
                   <span className="text-bold tag-span">
                     <a href={video.vd_link}>
                       {video.vd_react + video.vd_comment}
@@ -111,7 +111,7 @@ const ContentInfo = () => {
                   </span>
                 </p>
                 <div className="badge-div mb-1">
-                  <p className="badge-line text-bold">Tags: </p>
+                  <p className="badge-line text-bold">Chủ đề theo dõi: </p>
                   <Badge
                     className="text-bold mr-0-5"
                     type={"primary"}
@@ -127,7 +127,7 @@ const ContentInfo = () => {
                       }}
                     >
                       <i className="bx bx-user-check mr-0-5"></i>
-                      Follow
+                      Theo dõi
                     </button>
                   ) : (
                     <button
@@ -137,7 +137,7 @@ const ContentInfo = () => {
                       }}
                     >
                       <i className="bx bx-user-x mr-0-5"></i>
-                      Unfollow
+                      Bỏ theo dõi
                     </button>
                   )}
                   <a href={video.vd_link} target="_blank" rel="noreferrer">
@@ -174,7 +174,7 @@ const ContentInfo = () => {
               </div>
             </div>}
             <div className="card__header">
-              <p>Embed Video</p>
+              <p>Video</p>
             </div>
             <div className="card row flex-center">
               <div className="card__body">

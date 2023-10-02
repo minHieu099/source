@@ -19,11 +19,11 @@ const StatusCard = (props) => {
       <div className="row">
         <div className="status-card_info">
           <div className="justify-div">
-            <p className="mb-0-5">Scanned videos:</p>
+            <p className="mb-0-5">Số lượng video:</p>
             <span>{props.count}</span>
           </div>
           <div className="justify-div">
-            <p className="mb-0-5">Last 7 days:</p>
+            <p className="mb-0-5">Lượt tương tác</p>
             <span>{props.new}</span>
           </div>
         </div>

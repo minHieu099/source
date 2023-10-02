@@ -54,7 +54,7 @@ channelRouter.get("/:idchannel", async (req, res) => {
     const channel = await Channel.findOne({ channel_id: channelId });
 
     if (!channel) {
-      return res.status(404).json({ message: "Channel not found" });
+      return res.status(404).json({ message: "Không tìm thấy channel tương ứng" });
     }
 
     const videos = await Video.find({ vd_channel: channel.channel_name });
@@ -68,7 +68,7 @@ channelRouter.get("/:idchannel", async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ message: "Có lỗi trong quá trình xử lý" });
   }
 });
 //  Add new channel
@@ -83,7 +83,7 @@ channelRouter.post("/", async (req, res) => {
         // Kiểm tra xem tag đã tồn tại trong cơ sở dữ liệu chưa
         const existingChannel = await Channel.findOne({ channel_id: channelValue });
         if (existingChannel) {
-          return res.status(400).json({ message: "Channel already exists" });
+          return res.status(400).json({ message: "Channel đã tồn tại" });
         }
         // Tạo tag mới và lưu vào cơ sở dữ liệu
         const newChannel = new Channel({ channel_id: channelValue,
@@ -95,9 +95,9 @@ channelRouter.post("/", async (req, res) => {
         res.json(newChannel);
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: "Internal Server Error" });
+      res.status(500).json({ message: "Có lỗi trong quá trình xử lý" });
     }} else {
-    res.status(404).json({ message: 'Channel not found' });
+    res.status(404).json({ message: 'Không tìm thấy channel' });
   }
 } catch (err) {
   res.status(500).json({ message: err.message });
@@ -111,7 +111,7 @@ channelRouter.get("/:channelId", async (req, res) => {
     if (channelData) {
       res.json(channelData);
     } else {
-      res.status(404).json({ message: 'Channel not found' });
+      res.status(404).json({ message: 'Không tìm thấy channel' });
     }
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -124,12 +124,12 @@ channelRouter.delete("/:channelId", async (req, res) => {
     const channelId = req.params.channelId;
     const deletedChannel = await Channel.findOneAndDelete({ channel_id: channelId });
     if (!deletedChannel) {
-      return res.status(404).json({ message: "Channel not found " + channelId });
+      return res.status(404).json({ message: "Không tìm thấy channel có: " + channelId });
     }
-    res.json({ message: "Channel deleted successfully" });
+    res.json({ message: "Bỏ theo dõi channel thành công" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ message: "Có lỗi trong quá trình xử lý" });
   }
 });
 

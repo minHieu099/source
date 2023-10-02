@@ -40,7 +40,7 @@ videoRouter.get("/by-tag", async (req, res) => {
     res.json(tagStatistics);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: "Có lỗi trong quá trình xử lý" });
   }
 })
 // Get video all channel
@@ -55,7 +55,7 @@ videoRouter.get("/by-channel", async (req, res) => {
     res.json(channelStatistics);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: "Có lỗi trong quá trình xử lý" });
   }
 })
 
@@ -65,18 +65,18 @@ videoRouter.get("/followed", async (req, res) => {
     const videos = await Video.find({ vd_followed: 1 });
     res.json(videos);
   } catch (error) {
-    res.status(400).json({ message: "Internal Server Error" });
+    res.status(400).json({ message: "Có lỗi trong quá trình xử lý" });
   }
 });
 
 // Middleware để xóa các video có vd_tag là "ma ma"
 videoRouter.delete("/delete", async (req, res) => {
   try {
-    await Video.deleteMany({ vd_tag: "đâm xe" });
+    await Video.deleteMany({});
     res.status(200).json({ message: `Đã xóa toàn bộ video có`}) ;
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: `Đã xóa toàn bộ video có vd_tag`});
+    res.status(500).json({ message: `Đã xóa toàn bộ video có ${vd_tag}`});
   }
 });
 //  get top negative video 
@@ -90,11 +90,11 @@ videoRouter.get("/:id", async (req, res) => {
     const id = req.params.id;
     const video = await Video.findById(id);
     if (!video) {
-      return res.status(404).json({ message: "Video not found" });
+      return res.status(404).json({ message: "Không tìm thấy video" });
     }
     res.json(video);
   } catch (err) {
-    res.status(500).json({ message: "Error while handler data" });
+    res.status(500).json({ message: "Có lỗi trong quá trình xử lý" });
   }
 });
 
@@ -106,7 +106,7 @@ videoRouter.post("/:id", async (req, res) => {
     // Tìm video theo id
     const video = await Video.findById(id);
     if (!video) {
-      return res.status(404).json({ message: "Video not found" });
+      return res.status(404).json({ message: "Không tìm thấy video" });
     }
     // Cập nhật thuộc tính vd_followed của video
     video.vd_followed = vd_followed;
@@ -115,7 +115,7 @@ videoRouter.post("/:id", async (req, res) => {
     res.json(video);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ message: "Có lỗi trong quá trình xử lý" });
   }
 });
 

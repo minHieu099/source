@@ -69,7 +69,7 @@ const Contents = () => {
             <Search
               value={searchKey}
               onChange={(e) => setSearchKey(e.target.value)}
-              placeholder={"Search Here ..."}
+              placeholder={"Trích xuất thông tin ..."}
               handleEvent={handleSearchVideo}
             />
             {videos.length > 0 && (
@@ -79,12 +79,12 @@ const Contents = () => {
             )}
             <Select
               className="selectFilter"
-              defaultValue="All videos"
+              defaultValue="Toàn bộ video"
               onChange={handleChangeOption}
               dropdownStyle={{ fontSize: 16, padding: 0 }}
             >
               <Option value="default" className="option-padding">
-                All Videos
+                Toàn bộ video
               </Option>
               <Option value="negative" className="option-padding">
                 Tin tiêu cực

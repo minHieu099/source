@@ -19,11 +19,11 @@ import "./Pages.css";
 
 const customerTableHead = [
   "#",
-  "name",
-  "scanned contents",
-  "URL",
-  "view details",
-  "unfollow",
+  "Tên kênh",
+  "Số lượng video đăng tải",
+  "Liên kết",
+  "Phân tích chi tiết",
+  "Bỏ theo dõi",
 ];
 const ToastObjects = {
   pauseOnFocusLoss: false,
@@ -120,7 +120,7 @@ const Sources = () => {
             }}
             className="btn btn-view">
 
-            <i className="bx bx-search-alt mr-0-5"></i>Details
+            <i className="bx bx-search-alt mr-0-5"></i>Chi tiết
           </button>
         </div>
       </td>
@@ -130,7 +130,7 @@ const Sources = () => {
             onClick={() => showModalDelete(item.channel_id)}
             className="btn btn-delete"
           >
-            <i className="bx bx-user-x mr-0-5"></i>Unfollow
+            <i className="bx bx-user-x mr-0-5"></i>Bỏ theo dõi
           </button>
         </div>
       </td>
@@ -207,9 +207,9 @@ const Sources = () => {
           (
             <div>
               <div className="justify-div">
-                <p className="section__header">Source Manager</p>
+                <p className="section__header">Quản lý kênh</p>
                 <button className="btn btn-add" onClick={showModalAdd}>
-                  <i className="bx bx-plus mr-0-5"></i>Add Source
+                  <i className="bx bx-plus mr-0-5"></i>Thêm đối tượng
                 </button>
               </div>
               <div className="row">
@@ -228,13 +228,13 @@ const Sources = () => {
                 </div>
               </div>
               <Modal
-                title="Add a new source"
+                title="Thêm đối tượng mới vào danh sách"
                 centered
                 open={openAdd}
                 onOk={handleOkAdd}
                 confirmLoading={confirmLoading}
                 onCancel={handleCancelAdd}
-                okText="Add"
+                okText="Thêm"
                 okButtonProps={{
                   className: "ok-btn",
                   style: {
@@ -254,7 +254,7 @@ const Sources = () => {
                 }}
               >
                 <div className="modalBody">
-                  <label className="modalLabel">Source URL:</label>
+                  <label className="modalLabel">ID đối tượng:</label>
                   <input className="modalInput" type="text"
                     value={channelValue}
                     onChange={(e) => setChannelValue(e.target.value)}
@@ -268,7 +268,7 @@ const Sources = () => {
                 onOk={handleOkDelete}
                 confirmLoading={confirmLoading}
                 onCancel={handleCancelDelete}
-                okText="Unfollow"
+                okText="Bỏ theo dõi"
                 okButtonProps={{
                   className: "ok-btn",
                   style: {
@@ -286,7 +286,7 @@ const Sources = () => {
               >
                 <div className="modalBody">
                   <p>
-                    Are you sure you want to unfollow this source?
+                    Bạn có muốn xóa đối tượng khỏi danh sách theo dõi
                   </p>
                 </div>
               </Modal>

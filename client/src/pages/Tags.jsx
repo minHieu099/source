@@ -91,7 +91,7 @@ const Tags = () => {
           <button
             onClick={() => {
               item.count === 0
-                ? alert("Chưa có video mới")
+                ? alert("Đang tiến hành thu thập thông tin")
                 : viewDetails(item._id);
             }}
             className="btn btn-view"

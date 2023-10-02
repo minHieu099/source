@@ -21,7 +21,7 @@ tagRouter.get("/:tagid", async (req, res) => {
     const tagId = req.params.tagid;
     const tag = await Tag.findOne({ _id: tagId });
     if (!tag) {
-      return res.status(404).json({ message: "Tag not found data" });
+      return res.status(404).json({ message: "Không có dữ liệu về chủ đề" });
     }
     const videos = await Video.find({ vd_tag: tag.vd_tag })
     const negative_list = videos.filter((video) => video.vd_label === 2)
@@ -37,12 +37,12 @@ tagRouter.get("/:tagid", async (req, res) => {
         vd_tag: tag.vd_tag,
         countVideos:countVideos, 
         arr_statitics: arr_statitics,
-        videos:videos.length>80 ?videos.slice(0,80):videos,
+        videos:videos.length>8 ?videos.slice(0,8):videos,
       }
     );
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ message: "Có lỗi trong quá trình xử lý" });
   }
 });
 
@@ -53,7 +53,7 @@ tagRouter.post("/", async (req, res) => {
     // Kiểm tra xem tag đã tồn tại trong cơ sở dữ liệu chưa
     const existingTag = await Tag.findOne({ vd_tag: tagValue });
     if (existingTag) {
-      return res.status(400).json({ message: "Tag already exists" });
+      return res.status(400).json({ message: "Chủ đề đã tồn tại" });
     }
     // Tạo tag mới và lưu vào cơ sở dữ liệu
     const newTag = new Tag({ vd_tag: tagValue, crawled: false });
@@ -62,7 +62,7 @@ tagRouter.post("/", async (req, res) => {
     res.json(newTag);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ message: "Có lỗi trong quá trình xử lý" });
   }
 });
 
