@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import Badge from "../components/badge/Badge";
 import Table from "../components/table/Table";
+import SourceReport from "./SourceReport";
 
 // Redux-action
 import { getChannelDetail } from "../redux/actions/ChannelAction";
@@ -73,11 +74,19 @@ const SourceInfo = () => {
   const { loading, channelData, error } = videoByChannel
   useEffect(() => {
     dispatch(getChannelDetail(channelid))
-  }, [channelid,dispatch]);
+  }, [channelid, dispatch]);
 
   const history = useHistory();
 
-  
+  const [reportData, setReportData] = useState();
+  const [reloadData, setReloadData] = useState(false);
+
+  const handleClickReport = () => {
+    dispatch(getChannelDetail(channelid));
+    setReportData(channelData);
+    setReloadData(true);
+  }
+
 
   const viewContentDetails = (videoid) => history.push("/video/" + videoid);
 
@@ -86,7 +95,7 @@ const SourceInfo = () => {
   const renderContentBody = (item, index) => (
     <tr key={index}>
       <td>
-        {index+1}
+        {index + 1}
       </td>
       <td>
         <a href={item.vd_link}>{item.vd_link}</a>
@@ -201,16 +210,27 @@ const SourceInfo = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="card__header">
-                    <p>Scanned Contents</p>
+                  <div className="card__container">
+                    <div className="card__header">
+                      <p>Scanned Contents</p>
+                    </div>
+                    <div className="card__header">
+                      <button
+                        onClick={handleClickReport}
+                        className="btn btn-view"
+                      >
+                        <i className="bx bx-file-blank mr-0-5"></i>Tạo báo cáo
+                      </button>
+                    </div>
                   </div>
                   <div className="card row">
                     <div className="col-12">
                       <div className="card__body">
+                        <SourceReport reportData={reportData} reloadData={reloadData}/>
                         <Table
                           limit="10"
                           headerData={contentTableHead}
-                          bodyData={channelData["videos"]?channelData["videos"]:[]}
+                          bodyData={channelData["videos"] ? channelData["videos"] : []}
                           renderHeader={(item, index) => renderContentHead(item, index)}
                           renderBody={(item, index) => renderContentBody(item, index)}
                         />

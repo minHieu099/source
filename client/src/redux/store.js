@@ -4,7 +4,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 
 import ThemeReducer from "./reducers/ThemeReducer";
 import {videoListReducer,videoDetailsReducer} from "./reducers/VideoReducer"
-import { tagListReducer,tagDetailsReducer,tagCreateReducer } from "./reducers/TagReducer";
+import { tagListReducer,tagDetailsReducer,tagCreateReducer, tagReportReducer } from "./reducers/TagReducer";
 import { streamListReducer } from "./reducers/StreamReducer";
 import { channelListReducer,channelDetailsReducer,channelCreateReducer, channelDeleteReducer } from "./reducers/ChannelReducer";
 import { dashboardDataReducer } from "./reducers/DashboardReducer";
@@ -15,6 +15,7 @@ const rootReducer = combineReducers(
      tagList:tagListReducer,
      tagDetails:tagDetailsReducer,
      tagCreate:tagCreateReducer,
+     tagReport:tagReportReducer,
      streamList: streamListReducer,
      channelList:channelListReducer,
      channelDetails:channelDetailsReducer,

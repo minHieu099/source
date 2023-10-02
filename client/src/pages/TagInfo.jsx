@@ -5,11 +5,11 @@ import { useDispatch, useSelector } from "react-redux";
 
 import MyWordCloud from "../components/wordcloud/MyWordCloud";
 import VideoGrid from "../components/videogrid/VideoGrid";
-
-import tagList from "../assets/JsonData/tag-data.json";
+import TagReport from "./TagReport";
 
 // Redux-action
 import { getTagDetail } from "../redux/actions/TagAction";
+import { getTagReport } from "../redux/actions/TagAction";
 
 // loading-err
 import Loading from "../components/loadingError/Loading";
@@ -83,16 +83,41 @@ const chartOption4 = {
 
 const TagInfo = () => {
   const { tagid } = useParams();
-  const [dataAnalys, setDataAnalys] = useState([1, 0, 0])
+
   // Set Video by tag detail
   const dispatch = useDispatch();
   const ThemeReducer = useSelector((state) => state.theme.mode);
-  const videoByTag = useSelector((state) => state.tagDetails)
+  const videoByTag = useSelector((state) => state.tagDetails);
   const { loading, tagData, error } = videoByTag
+
+  const reportByTag = useSelector((state) => state.tagReport);
+  const {
+    loading: loadingReportTag,
+    tagReportData,
+    error: errorReportTag,
+  } = reportByTag;
+
   useEffect(() => {
     dispatch(getTagDetail(tagid))
-  }, [tagid,dispatch]);
+    dispatch(getTagReport(tagid))
+  }, [tagid, dispatch]);
   console.log(tagData)
+
+  
+  const [reportData, setReportData] = useState();
+  const [reloadData, setReloadData] = useState(false);
+
+  const handleClickReport = () => {
+    dispatch(getTagReport(tagid));
+    setReportData(tagReportData);
+    console.log('hihia', tagReportData)
+    setReloadData(true);
+  }
+
+  const completeExport = () => {
+    setReloadData(false);
+  }
+
   return (
     <>
       {
@@ -113,7 +138,7 @@ const TagInfo = () => {
                       <p>
                         All Scanned Contents:{" "}
                         <span className="text-bold tag-span">{
-                          tagData["countVideos"] ? tagData["countVideos"]:0 }</span>
+                          tagData["countVideos"] ? tagData["countVideos"] : 0}</span>
                       </p>
                       <p>
                         Scanned Videos In Last 1 Year:{" "}
@@ -162,7 +187,7 @@ const TagInfo = () => {
                               theme: { mode: "light" },
                             }
                         }
-                        series={tagData["arr_statitics"] ? tagData["arr_statitics"] :[1,0,0] }
+                        series={tagData["arr_statitics"] ? tagData["arr_statitics"] : [1, 0, 0]}
                         type="pie"
                       />
                     </div>
@@ -171,10 +196,21 @@ const TagInfo = () => {
                     <MyWordCloud />
                   </div>
                 </div>
-                <div className="card__header">
-                  <p>Top videos of Tag</p>
+                <div className="card__container">
+                  <div className="card__header">
+                    <p>Top videos of Tag</p>
+                  </div>
+                  <div className="card__header">
+                    <button
+                      onClick={handleClickReport}
+                      className="btn btn-view"
+                    >
+                      <i className="bx bx-file-blank mr-0-5"></i>Tạo báo cáo
+                    </button>
+                  </div>
                 </div>
-                <VideoGrid limit={8} videos={tagData["videos"]?tagData["videos"]: [] } />
+                <TagReport reportData={reportData} reloadData={reloadData} completeExport={completeExport}/>
+                <VideoGrid limit={8} videos={tagData["videos"] ? tagData["videos"] : []} />
               </div>
             </div>
 
