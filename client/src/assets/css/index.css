@@ -91,6 +91,10 @@ input:focus {
 .card.row {
   margin-bottom: 30px;
 }
+.card__container {
+  display: flex;
+  justify-content: space-between;
+}
 .card__header {
   margin-top: 1rem;
   text-transform: capitalize;
@@ -263,8 +267,6 @@ h2 {
   height: 50px;
   border-radius: 50%;
   margin-right: 10px;
-}
-.comment-content {
 }
 .comment-username {
   font-weight: bold;
