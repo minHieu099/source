@@ -9,7 +9,7 @@ const videoRouter = express.Router();
 videoRouter.get("/all", async (req, res) => {
   try {
     const label = req.query.label;
-    const react = req.query.react ? { vd_react: { $gte: 800 } } : {};
+    const react = req.query.react ? { vd_react: { $gte: 500 } } : {};
     const keyword = req.query.keyword
       ? {
           $or: [
@@ -20,8 +20,8 @@ videoRouter.get("/all", async (req, res) => {
         }
       : {};
     const videos = label
-      ? await Video.find({ vd_label: label, ...react, ...keyword }).limit(80)
-      : await Video.find({ ...react, ...keyword }).limit(80);
+      ? await Video.find({ vd_label: label, ...react, ...keyword }).limit(8)
+      : await Video.find({ ...react, ...keyword }).limit(8);
     res.json(videos);
   } catch (err) {
     res.status(500).json({ message: err.message });

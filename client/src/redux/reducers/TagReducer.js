@@ -49,3 +49,19 @@ export const tagCreateReducer = (state = {}, action) => {
       return state;
   }
 };
+
+// Reducer report by tag
+export const  tagReportReducer =(
+  state ={tagReportData: {}},action
+)=> {
+  switch(action.type){
+      case 'TAG_REPORT_REQUEST':
+          return {loading:true,tagReportData:{}}
+      case 'TAG_REPORT_SUCCESS':
+          return {loading:false, tagReportData:action.payload}
+      case 'TAG_REPORT_FAIL':
+          return {loading:false,error:action.payload}
+      default: 
+          return state;
+  }
+}

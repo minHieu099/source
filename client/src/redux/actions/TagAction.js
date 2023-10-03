@@ -63,3 +63,22 @@ export const createTag = (tag) => async (dispatch) => {
     });
   }
 };
+
+// Get report by tag
+export const getTagReport = (tagId) => async (dispatch) => {
+  try {
+    dispatch({ type: "TAG_REPORT_REQUEST" });
+    const { data } = await axios.get(`${URL}/api/tags/report/${tagId}`);
+    dispatch({ type: "TAG_REPORT_SUCCESS", payload: data });
+  } catch (error) {
+    const message =
+    error.response && error.response.data.message
+      ? error.response.data.message
+      : error.message;
+    dispatch({
+      type: "TAG_REPORT_FAIL",
+      payload:message
+
+    });
+  }
+};
