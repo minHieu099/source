@@ -131,41 +131,26 @@ const TagInfo = () => {
       ) : (
         <div>
           <p className="section__header page-header">
-            Quản lý kênh / Kênh{" "}
-            <span className="tag-span">{channelData["channel_name"]}</span>
+            Quản lý chủ đề / Chủ đề:{" "}
+            <span className="tag-span">{tagData["vd_tag"]}</span>
           </p>
           <div className="col-12">
-            <div className="justify-div"></div>
             <div className="card row">
               <div className="col-4 col-md-12">
                 <div className="card__body card__body-p">
                   <p>
-                    Tên kênh:{" "}
+                    Tên chủ đề:{" "}
+                    <span className="text-bold tag-span">{tagData["vd_tag"]}</span>
+                  </p>
+                  <p>
+                    Nội dung thu được:{" "}
                     <span className="text-bold tag-span">
-                      {channelData["channel_name"]}
+                      {tagData["countVideos"] ? tagData["countVideos"] : 0}
                     </span>
                   </p>
                   <p>
-                    Liên kết khả dụng:{" "}
-                    <span className="text-bold tag-span">
-                      <a href={channelData["channel_link"]}>
-                        {channelData["channel_link"]}
-                      </a>
-                    </span>
-                  </p>
-                  <p>
-                    Video đăng tải:{" "}
-                    <span className="text-bold tag-span">
-                      {channelData["video_count"]}
-                    </span>
-                  </p>
-                  <p>
-                    Video đăng tải ngày gần nhất:{" "}
-                    <span className="text-bold tag-span">11</span>
-                  </p>
-                  <p>
-                    Số lượt tương tác trong ngày:{" "}
-                    <span className="text-bold tag-span">{50}</span>
+                    Nội dung thu được gần đây:{" "}
+                    <span className="text-bold tag-span">20</span>
                   </p>
                 </div>
               </div>
@@ -192,35 +177,55 @@ const TagInfo = () => {
               </div>
             </div>
             <div className="card__header">
-              <p>Video của kênh</p>
-              <div className="card__container">
-                <div className="card__header">
-                  <p>Scanned Contents</p>
-                </div>
-                <div className="card__header">
-                  <button
-                    onClick={handleClickReport}
-                    className="btn btn-view"
-                  >
-                    <i className="bx bx-file-blank mr-0-5"></i>Tạo báo cáo
-                  </button>
-                </div>
-              </div>
+              <p>Phân tích nội dung</p>
             </div>
             <div className="card row">
-              <div className="col-12">
-                <div className="card__body">
-                  <SourceReport reportData={reportData} reloadData={reloadData} />
-                  <Table
-                    limit="10"
-                    headerData={contentTableHead}
-                    bodyData={channelData["videos"] ? channelData["videos"] : []}
-                    renderHeader={(item, index) => renderContentHead(item, index)}
-                    renderBody={(item, index) => renderContentBody(item, index)}
+              <div className="col-4 col-md-12">
+                <div className="card-chart full-height col-12">
+                  <Chart
+                    options={
+                      ThemeReducer === "theme-mode-dark"
+                        ? {
+                          ...chartOption4.options,
+                          theme: { mode: "dark" },
+                        }
+                        : {
+                          ...chartOption4.options,
+                          theme: { mode: "light" },
+                        }
+                    }
+                    series={
+                      tagData["arr_statitics"]
+                        ? tagData["arr_statitics"]
+                        : [1, 0, 0]
+                    }
+                    type="pie"
                   />
                 </div>
               </div>
+              <div className="col-8 col-md-12">
+                <MyWordCloud />
+              </div>
             </div>
+            <div className="card__container">
+              <div className="card__header">
+                <p>Top các nội dung liên quan</p>
+              </div>
+              <div className="card__header">
+                <button onClick={handleClickReport} className="btn btn-view">
+                  <i className="bx bx-file-blank mr-0-5"></i>Tạo báo cáo
+                </button>
+              </div>
+            </div>
+            <TagReport
+              reportData={reportData}
+              reloadData={reloadData}
+              completeExport={completeExport}
+            />
+            <VideoGrid
+              limit={8}
+              videos={tagData["videos"] ? tagData["videos"] : []}
+            />
           </div>
         </div>
       )}
