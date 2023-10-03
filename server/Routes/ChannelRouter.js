@@ -63,7 +63,7 @@ channelRouter.get("/:idchannel", async (req, res) => {
     res.json({
       channel_name: channel.channel_name,
       video_count: videoCount,
-      videos: videos.length > 80 ? videos.limit(80) : videos,
+      videos: videos.length > 8 ? videos.limit(8) : videos,
       channel_link: channel.channel_link
     });
   } catch (error) {

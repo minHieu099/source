@@ -24,9 +24,9 @@ tagRouter.get("/:tagid", async (req, res) => {
       return res.status(404).json({ message: "Không có dữ liệu về chủ đề" });
     }
     const videos = await Video.find({ vd_tag: tag.vd_tag })
-    const negative_list = videos.filter((video) => video.vd_label === 2)
+    const negative_list = videos.filter((video) => video.vd_label === 0)
     const positive_list = videos.filter((video) => video.vd_label === 1)
-    const neural_list = videos.filter((video) => video.vd_label === 0)
+    const neural_list = videos.filter((video) => video.vd_label === 2)
     const countVideos = videos.length
     const arr_statitics = [
       positive_list ? positive_list.length:0,
