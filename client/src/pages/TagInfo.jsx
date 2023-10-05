@@ -9,7 +9,6 @@ import TagReport from "./TagReport";
 
 // Redux-action
 import { getTagDetail } from "../redux/actions/TagAction";
-import { getTagReport } from "../redux/actions/TagAction";
 
 // loading-err
 import Loading from "../components/loadingError/Loading";
@@ -90,33 +89,10 @@ const TagInfo = () => {
   const videoByTag = useSelector((state) => state.tagDetails);
   const { loading, tagData, error } = videoByTag
 
-  const reportByTag = useSelector((state) => state.tagReport);
-  const {
-    loading: loadingReportTag,
-    tagReportData,
-    error: errorReportTag,
-  } = reportByTag;
-
   useEffect(() => {
     dispatch(getTagDetail(tagid))
-    dispatch(getTagReport(tagid))
   }, [tagid, dispatch]);
   console.log(tagData)
-
-
-  const [reportData, setReportData] = useState();
-  const [reloadData, setReloadData] = useState(false);
-
-  const handleClickReport = () => {
-    dispatch(getTagReport(tagid));
-    setReportData(tagReportData);
-    console.log('hihia', tagReportData)
-    setReloadData(true);
-  }
-
-  const completeExport = () => {
-    setReloadData(false);
-  }
 
   return (
     <>
@@ -212,16 +188,10 @@ const TagInfo = () => {
                 <p>Top các nội dung liên quan</p>
               </div>
               <div className="card__header">
-                <button onClick={handleClickReport} className="btn btn-view">
-                  <i className="bx bx-file-blank mr-0-5"></i>Tạo báo cáo
-                </button>
+                <TagReport tagId={tagid} />
               </div>
             </div>
-            <TagReport
-              reportData={reportData}
-              reloadData={reloadData}
-              completeExport={completeExport}
-            />
+
             <VideoGrid
               limit={8}
               videos={tagData["videos"] ? tagData["videos"] : []}

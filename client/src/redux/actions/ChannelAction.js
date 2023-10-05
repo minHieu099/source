@@ -85,3 +85,22 @@ export const getChannelDetail = (channelid) => async (dispatch) => {
       });
     }
   };
+
+  // Get report by channel
+export const getChannelReport = (channelId) => async (dispatch) => {
+  try {
+    dispatch({ type: "CHANNEL_REPORT_REQUEST" });
+    const { data } = await axios.get(`${URL}/api/channels/report/${channelId}`);
+    dispatch({ type: "CHANNEL_REPORT_SUCCESS", payload: data });
+  } catch (error) {
+    const message =
+    error.response && error.response.data.message
+      ? error.response.data.message
+      : error.message;
+    dispatch({
+      type: "CHANNEL_REPORT_FAIL",
+      payload:message
+
+    });
+  }
+};

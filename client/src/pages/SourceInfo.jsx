@@ -78,16 +78,6 @@ const SourceInfo = () => {
 
   const history = useHistory();
 
-  const [reportData, setReportData] = useState();
-  const [reloadData, setReloadData] = useState(false);
-
-  const handleClickReport = () => {
-    dispatch(getChannelDetail(channelid));
-    setReportData(channelData);
-    setReloadData(true);
-  }
-
-
   const viewContentDetails = (videoid) => history.push("/video/" + videoid);
 
   const renderContentHead = (item, index) => <th key={index}>{item}</th>;
@@ -220,19 +210,13 @@ const SourceInfo = () => {
                 <p>Video của kênh</p>
                 </div>
                 <div className="card__header">
-                  <button
-                    onClick={handleClickReport}
-                    className="btn btn-view"
-                  >
-                    <i className="bx bx-file-blank mr-0-5"></i>Tạo báo cáo
-                  </button>
+                <SourceReport channelId={channelid} />
                 </div>
               </div>
             </div>
             <div className="card row">
               <div className="col-12">
                 <div className="card__body">
-                  <SourceReport reportData={reportData} reloadData={reloadData} />
                   <Table
                     limit="10"
                     headerData={contentTableHead}

@@ -19,9 +19,20 @@ videoRouter.get("/all", async (req, res) => {
           ],
         }
       : {};
+    const startdate = req.query.startdate;
+    const enddate = req.query.enddate;
+    let dateFilter = {};
+    if (req.query.startdate && req.query.enddate) {
+      dateFilter = {
+        vd_publishAt: {
+          $gte: req.query.startdate,
+          $lte: req.query.enddate,
+        },
+      };
+    }
     const videos = label
-      ? await Video.find({ vd_label: label, ...react, ...keyword }).limit(8)
-      : await Video.find({ ...react, ...keyword }).limit(8);
+      ? await Video.find({ vd_label: label, ...react, ...keyword , ...dateFilter}).limit(8)
+      : await Video.find({ ...react, ...keyword, ...dateFilter }).limit(8);
     res.json(videos);
   } catch (err) {
     res.status(500).json({ message: err.message });

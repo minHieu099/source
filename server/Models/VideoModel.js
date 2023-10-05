@@ -4,7 +4,7 @@ import mongoose  from "mongoose";
 const videosSchema = new mongoose.Schema({
     vd_title: String,
     vd_link: String,
-    vd_publishAt: Date,
+    vd_publishAt: String,
     vd_channel: String,
     vd_description: String,
     vd_content: String,

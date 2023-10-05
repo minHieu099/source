@@ -61,3 +61,20 @@ export const channelDeleteReducer = (state = {}, action) => {
     }
   };
 
+
+  // Reducer report by channel
+export const  channelReportReducer =(
+  state ={channelReportData: {}},action
+)=> {
+  switch(action.type){
+      case 'CHANNEL_REPORT_REQUEST':
+          return {loading:true,channelReportData:{}}
+      case 'CHANNEL_REPORT_SUCCESS':
+          return {loading:false, channelReportData:action.payload}
+      case 'CHANNEL_REPORT_FAIL':
+          return {loading:false,error:action.payload}
+      default: 
+          return state;
+  }
+}
+

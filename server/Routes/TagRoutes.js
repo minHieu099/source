@@ -107,7 +107,7 @@ tagRouter.get("/report/:tagid", async (req, res) => {
     });
     const channels = Object.keys(channel_counts)
       .sort((a, b) => channel_counts[b] - channel_counts[a])
-      .slice(0, 20);
+      .slice(0, 8);
 
     // Lấy các kênh có nhiều video tiêu cực nhất
     const channel_negative_counts = {};

@@ -21,6 +21,9 @@ export const getListVideo = (params) => async (dispatch) => {
         ? `&react=${params.react}`
         : `react=${params.react}`;
     }
+    if (params?.startdate && params?.enddate) {
+      query += `&startdate=${params.startdate}&enddate=${params.enddate}`;
+    }
 
     const { data } = await axios.get(`${URL}/api/videos/all?${query}`);
 
