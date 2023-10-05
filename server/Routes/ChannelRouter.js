@@ -60,11 +60,39 @@ channelRouter.get("/:idchannel", async (req, res) => {
     const videos = await Video.find({ vd_channel: channel.channel_name });
     const videoCount = videos.length;
 
+    const monthlyData = {};
+    const currentYear = new Date().getFullYear();
+    for (let month = 3; month <= 9; month++) {
+      const yearMonth = `T${month}/${currentYear}`;
+      monthlyData[yearMonth] = {
+        total: 0,
+        negative: 0,
+      };
+    }
+    videos.forEach((video) => {
+      const date = new Date(video.vd_publishAt);
+      const yearMonth = `T${date.getMonth() + 1}/${date.getFullYear()}`;
+      if (monthlyData[yearMonth]) {
+        monthlyData[yearMonth].total++;
+        if (video.vd_label === 2) {
+          monthlyData[yearMonth].negative++;
+        }
+      }
+    });
+    const categories = Object.keys(monthlyData); // Không cần sắp xếp
+    const totalVideos = categories.map((month) => monthlyData[month].total);
+    const negativeVideos = categories.map((month) => monthlyData[month].negative);
+
     res.json({
       channel_name: channel.channel_name,
       video_count: videoCount,
       videos: videos.length > 8 ? videos.limit(8) : videos,
-      channel_link: channel.channel_link
+      channel_link: channel.channel_link,
+      chartData: {
+        categories,
+        totalVideos,
+        negativeVideos,
+      },
     });
   } catch (error) {
     console.error(error);

@@ -57,7 +57,6 @@ const TagReport = ({ tagId }) => {
             <i className="bx bx-file-blank mr-0-5"></i>Tạo báo cáo
         </button>
         <div className="WordSection1" style={{ display: 'none' }}>
-            {console.log('tagReportData', tagReportData)}
             <div style={{ width: 'fit-content', marginLeft: 'calc(50% - 340px)' }} id="baoCao">
                 <p style={{}}><b>HỌC VIỆN KỸ THUẬT QUÂN SỰ</b></p>
                 <p style={{ textAlign: 'right' }} align="right" ><i>Hà Nội, ngày {date.getDate()} tháng {date.getMonth()} năm {date.getFullYear()}</i></p>

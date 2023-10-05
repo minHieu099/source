@@ -39,7 +39,6 @@ const SourceReport = ({ channelId }) => {
 
     if (channelReportData === null || (Array.isArray(channelReportData) && channelReportData.length === 0) || (typeof channelReportData === "object" && Object.keys(channelReportData).length === 0)) {
         return (<>
-            {console.log(channelReportData)}
             <button
                 onClick={handleClickReport}
                 className="btn btn-view"
@@ -51,7 +50,6 @@ const SourceReport = ({ channelId }) => {
     }
 
     return (<>
-        {console.log(channelReportData)}
         <button
             onClick={handleClickReport}
             className="btn btn-view"

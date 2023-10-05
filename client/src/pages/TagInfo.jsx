@@ -16,47 +16,6 @@ import Message from "../components/loadingError/Error";
 
 import "./Pages.css";
 
-const chartOption2 = {
-  series: [
-    {
-      data: [12, 16, 4, 8, 21, 3, 12, 16, 4, 8, 21, 3],
-    },
-  ],
-  options: {
-    chart: {
-      type: "area",
-    },
-    dataLabels: {
-      enabled: true,
-    },
-    stroke: {
-      curve: "smooth",
-    },
-    xaxis: {
-      categories: [
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-      ],
-    },
-    title: {
-      text: "Monthly Videos",
-    },
-    grid: {
-      show: false,
-    },
-  },
-};
-
 const chartOption4 = {
   series: [44, 55, 26],
   options: {
@@ -92,7 +51,7 @@ const TagInfo = () => {
   useEffect(() => {
     dispatch(getTagDetail(tagid))
   }, [tagid, dispatch]);
-  console.log(tagData)
+  
 
   return (
     <>
@@ -108,6 +67,7 @@ const TagInfo = () => {
         <div>
           <p className="section__header page-header">
             Quản lý chủ đề / Chủ đề:{" "}
+            {console.log(tagData)}
             <span className="tag-span">{tagData["vd_tag"]}</span>
           </p>
           <div className="col-12">
@@ -132,23 +92,26 @@ const TagInfo = () => {
               </div>
               <div className="col-8 col-md-12">
                 <div className="card-chart full-height col-12">
-                  <Chart
-                    options={
-                      ThemeReducer === "theme-mode-dark"
-                        ? {
-                          ...chartOption2.options,
-                          theme: { mode: "dark" },
-                          background: "#2d2d2d",
-                        }
-                        : {
-                          ...chartOption2.options,
-                          theme: { mode: "light" },
-                        }
-                    }
-                    series={chartOption2.series}
-                    height="120%"
-                    type="area"
-                  />
+                {tagData.chartData && (<Chart
+                    options={{
+                      xaxis: { categories: tagData.chartData.categories, },
+                      title: { text: "Thống kê video theo tháng", },
+                      stroke: { curve: 'straight' },
+                      colors: ["#fb0b12", "#43c8ff"],
+                    }}
+                    series={[
+                      {
+                        name: "Video tiêu cực",
+                        data: tagData.chartData.negativeVideos,
+                      },
+                      {
+                        name: "Video tích cực và trung tính",
+                        data: tagData.chartData.positiveNeutralVideos,
+                      },
+                    ]}
+                    height="300"
+                    type="bar"
+                  />)}
                 </div>
               </div>
             </div>

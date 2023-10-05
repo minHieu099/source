@@ -30,15 +30,46 @@ tagRouter.get("/:tagid", async (req, res) => {
     const neural_list = videos.filter((video) => video.vd_label === 2)
     const countVideos = videos.length
     const arr_statitics = [
-      positive_list ? positive_list.length:0,
-      negative_list? negative_list.length :0,
-      neural_list ? neural_list.length :0]
+      positive_list ? positive_list.length : 0,
+      negative_list ? negative_list.length : 0,
+      neural_list ? neural_list.length : 0]
+
+    const monthlyData = {};
+    const currentYear = new Date().getFullYear();
+    for (let month = 3; month <= 9; month++) {
+      const yearMonth = `T${month}/${currentYear}`;
+      monthlyData[yearMonth] = {
+        negative: 0,
+        positiveNeutral: 0,
+      };
+    }
+    videos.forEach((video) => {
+      const date = new Date(video.vd_publishAt);
+      const yearMonth = `T${date.getMonth() + 1}/${date.getFullYear()}`;
+      if (monthlyData[yearMonth]) {
+        if (video.vd_label === 2) {
+          monthlyData[yearMonth].negative++;
+        }
+        if (video.vd_label === 0 || video.vd_label === 1) {
+          monthlyData[yearMonth].positiveNeutral++;
+        }
+      }
+    });
+    const categories = Object.keys(monthlyData); // Không cần sắp xếp
+    const negativeVideos = categories.map((month) => monthlyData[month].negative);
+    const positiveNeutralVideos = categories.map((month) => monthlyData[month].positiveNeutral);
+
     res.json(
-      { 
+      {
         vd_tag: tag.vd_tag,
-        countVideos:countVideos, 
+        countVideos: countVideos,
         arr_statitics: arr_statitics,
-        videos:videos.length>8 ?videos.slice(0,8):videos,
+        videos: videos.length > 8 ? videos.slice(0, 8) : videos,
+        chartData: {
+          categories,
+          negativeVideos,
+          positiveNeutralVideos,
+        },
       }
     );
   } catch (error) {

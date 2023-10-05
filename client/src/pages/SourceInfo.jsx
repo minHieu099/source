@@ -18,49 +18,6 @@ import Message from "../components/loadingError/Error";
 // import sourceList from "../assets/JsonData/source-data.json";
 import "./Pages.css";
 
-const chartOption2 = {
-  series: [
-    {
-      data: [
-        1271, 1051, 2163, 1235, 1271, 1581, 2163, 1235, 3012, 1851, 2163, 1271,
-      ],
-    },
-  ],
-  options: {
-    chart: {
-      type: "area",
-    },
-    dataLabels: {
-      enabled: true,
-    },
-    stroke: {
-      curve: "smooth",
-    },
-    xaxis: {
-      categories: [
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-      ],
-    },
-    title: {
-      text: "Monthly Reactives",
-    },
-    grid: {
-      show: false,
-    },
-  },
-};
-
 const contentTableHead = ["#", "Video", "Nội dung", "Loại", "Chi tiết của video"];
 
 const SourceInfo = () => {
@@ -72,8 +29,8 @@ const SourceInfo = () => {
   const videoByChannel = useSelector((state) => state.channelDetails)
 
   const { loading, channelData, error } = videoByChannel
-  useEffect(() => {
-    dispatch(getChannelDetail(channelid))
+  useEffect(async () => {
+    await dispatch(getChannelDetail(channelid))
   }, [channelid, dispatch]);
 
   const history = useHistory();
@@ -130,7 +87,6 @@ const SourceInfo = () => {
     </tr>
   );
 
-
   return (
     <>
       {loading ? (
@@ -184,33 +140,37 @@ const SourceInfo = () => {
               </div>
               <div className="col-8 col-md-12">
                 <div className="card-chart full-height col-12">
-                  <Chart
-                    options={
-                      ThemeReducer === "theme-mode-dark"
-                        ? {
-                          ...chartOption2.options,
-                          theme: { mode: "dark" },
-                          background: "#2d2d2d",
-                        }
-                        : {
-                          ...chartOption2.options,
-                          theme: { mode: "light" },
-                        }
-                    }
-                    series={chartOption2.series}
-                    height="120%"
-                    type="area"
-                  />
+                  {channelData.chartData && (<Chart
+                    options={{
+                      chart: { type: "line", },
+                      xaxis: { categories: channelData.chartData.categories, },
+                      title: { text: "Thống kê video theo tháng", },
+                      stroke: { curve: 'straight' },
+                      colors: ["#43c8ff", "#fb0b12"],
+                    }}
+                    series={[
+                      {
+                        name: "Tổng số video",
+                        data: channelData.chartData.totalVideos,
+                      },
+                      {
+                        name: "Video tiêu cực",
+                        data: channelData.chartData.negativeVideos,
+                      },
+                    ]}
+                    height="300"
+                    type="line"
+                  />)}
                 </div>
               </div>
             </div>
             <div className="card__header">
               <div className="card__container">
                 <div className="card__header">
-                <p>Video của kênh</p>
+                  <p>Video của kênh</p>
                 </div>
                 <div className="card__header">
-                <SourceReport channelId={channelid} />
+                  <SourceReport channelId={channelid} />
                 </div>
               </div>
             </div>
