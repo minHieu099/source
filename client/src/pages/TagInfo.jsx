@@ -51,7 +51,7 @@ const TagInfo = () => {
   useEffect(() => {
     dispatch(getTagDetail(tagid))
   }, [tagid, dispatch]);
-  
+
 
   return (
     <>
@@ -86,17 +86,23 @@ const TagInfo = () => {
                   </p>
                   <p>
                     Nội dung thu được gần đây:{" "}
-                    <span className="text-bold tag-span">20</span>
+                    <span className="text-bold tag-span">{tagData["recentCount"]}</span>
                   </p>
+                  {tagData["trend"] && (
+                    <p style={{color: 'red'}}>
+                      Xu hướng chủ đề:{" "}
+                      <span className="text-bold tag-span" style={{color: 'red'}}>{tagData["trend"]}</span>
+                    </p>
+                  )}
                 </div>
               </div>
               <div className="col-8 col-md-12">
                 <div className="card-chart full-height col-12">
-                {tagData.chartData && (<Chart
+                  {tagData.chartData && (<Chart
                     options={{
                       xaxis: { categories: tagData.chartData.categories, },
                       title: { text: "Thống kê video theo tháng", },
-                      stroke: { curve: 'straight' },
+                      stroke: { curve: 'smooth' },
                       colors: ["#fb0b12", "#43c8ff"],
                     }}
                     series={[
@@ -110,7 +116,7 @@ const TagInfo = () => {
                       },
                     ]}
                     height="300"
-                    type="bar"
+                    type="area"
                   />)}
                 </div>
               </div>

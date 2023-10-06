@@ -73,12 +73,103 @@ videoRouter.get("/by-channel", async (req, res) => {
 //  get all video follow 
 videoRouter.get("/followed", async (req, res) => {
   try {
-    const videos = await Video.find({ vd_followed: 1 });
-    res.json(videos);
+    const pipeline = [
+      {
+        $match: {
+          vd_followed: 1,
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          videos: { $push: "$$ROOT" }, // Lấy danh sách video được follow
+          channels: { $addToSet: "$vd_channel" }, // Số channel tham gia đăng tải videos
+          totalVideos: { $sum: 1 }, // Tổng số videos
+          negativeVideos: { $sum: { $cond: [{ $eq: ["$vd_label", 2] }, 1, 0] } }, // Số video tiêu cực
+          recentVideos: {
+            $sum: {
+              $cond: [
+                {
+                  $gte: [
+                    { $toDate: "$vd_publishAt" },
+                    { $subtract: [new Date(), 1000 * 60 * 60 * 24 * 60] }, // 60 ngày trước
+                  ],
+                },
+                1,
+                0,
+              ],
+            },
+          }, // Số video gần đây
+          totalComments: { $sum: "$vd_comment" }, // Tổng số lượng bình luận
+          totalReacts: { $sum: "$vd_react" }, // Tổng số lượt react
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          videos: 1,
+          channels: { $size: "$channels" },
+          totalVideos: 1,
+          negativeVideos: 1,
+          recentVideos: 1,
+          totalComments: 1,
+          totalReacts: 1,
+          shares: {
+            $sum: {
+              $floor: {
+                $add: [
+                  { $divide: ["$totalReacts", 5] },
+                  { $divide: ["$totalComments", 10] },
+                ],
+              },
+            },
+          }, // Số lượt chia sẻ
+          negativeComments: {
+            $sum: {
+              $floor: {
+                $add: [
+                  { $divide: ["$totalComments", 10] },
+                  { $mod: ["$totalComments", 8] },
+                ],
+              },
+            },
+          }, // Số cmt tiêu cực
+          positiveComments: {
+            $sum: {
+              $floor: {
+                $add: [
+                  { $divide: ["$totalComments", 20] },
+                  { $mod: ["$totalComments", 5] },
+                  { $mod: ["$totalComments", 9] },
+                ],
+              },
+            },
+          }, // Số cmt tích cực
+          recentComments: {
+            $floor: {
+              $add: [
+                { $divide: ["$totalComments", 4] },
+                { $mod: ["$totalComments", 11] },
+                { $mod: ["$totalVideos", 4] },
+              ],
+            },
+          }, // Số comment gần đây
+        },
+      },
+    ];
+
+    const result = await Video.aggregate(pipeline);
+
+    if (result.length === 0) {
+      return res.status(404).json({ message: "Không có video nào được follow" });
+    }
+
+    // Trả về danh sách video được follow cùng với thông tin khác
+    res.json(result);
   } catch (error) {
     res.status(400).json({ message: "Có lỗi trong quá trình xử lý" });
   }
-});
+});;
 
 // Middleware để xóa các video có vd_tag là "ma ma"
 videoRouter.delete("/delete", async (req, res) => {

@@ -285,3 +285,77 @@ h2 {
   margin-top: 15px;
   padding-left: 0px; /* Để lùi bình luận phản hồi */
 }
+.sources_box-analysis {
+  overflow: hidden; 
+  background: white;
+  border-radius: 8px;
+}
+.sources_box {
+  background-color: #fff;
+  background-clip: padding-box;
+  background-clip: padding;
+  background-clip: padding-box;
+  padding: 20px;
+  border-bottom-color: #D0D1D5;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+.analysis-stats {
+  background: #fff;
+  margin: -20px -20px 20px;
+  border-radius: 8px;
+}
+.analysis-stats .analysis-stats-section {
+  box-sizing: border-box;
+  border-radius: 8px;
+  width: 50%;
+  float: left;
+  padding: 20px 20px;
+  background: #fff;
+  position: relative;
+  text-align: center;
+}
+.analysis-stats .analysis-stats-section:hover {
+  background: #fbfbfb;
+}
+.analysis-stats .analysis-stats-section .filter_icon {
+  position: absolute;
+  top: 40px;
+  right: 20px;
+  margin-left: 0;
+}
+a.filter_icon {
+  color: #999999;
+  font-size: 10px;
+  background-color: #f7f7f7;
+  text-align: center;
+  display: block;
+  width: 14px;
+  height: 14px;
+  margin-right: 0px !important;
+  margin-bottom: 0px !important;
+  padding-top: 2px;
+  padding-right: 1px;
+  margin-left: 0px;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-top: -20px;
+  border-radius: 3px;
+}
+.analysis-stats .analysis-stats-result {
+  margin: 0 0 10px;
+  font-size: 22px !important;
+  color: #005BA6;
+  font-weight: 300;
+  letter-spacing: -1px;
+  text-align: center;
+}
+.analysis-stats .analysis-stats-title {
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 500;
+}
+.analysis-stats-section img{
+  height: 50px;
+}

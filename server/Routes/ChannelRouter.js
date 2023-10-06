@@ -48,6 +48,55 @@ channelRouter.get("/all", async (req, res) => {
 //     res.status(500).json({ message: "Internal Server Error" });
 //   }
 // });
+
+function calculateTrend(videos) {
+  // Sắp xếp các video theo thời gian đăng tải
+  videos.sort((a, b) => {
+    const dateA = new Date(a.vd_publishAt);
+    const dateB = new Date(b.vd_publishAt);
+    return dateA - dateB;
+  });
+
+  // Lấy ngày đầu tiên và ngày cuối cùng trong danh sách video
+  const startDate = new Date(videos[0].vd_publishAt);
+  const endDate = new Date(videos[videos.length - 1].vd_publishAt);
+
+  // Tính số ngày giữa hai ngày này
+  const daysBetween = (endDate - startDate) / (1000 * 3600 * 24);
+
+  // Chia dữ liệu thành ba khoảng thời gian: 3 tháng gần đây và phần còn lại
+  const recentVideos = [];
+  const olderVideos = [];
+  for (const video of videos) {
+    const videoDate = new Date(video.vd_publishAt);
+    if (videoDate > endDate - 90 * 24 * 60 * 60 * 1000) {
+      recentVideos.push(video);
+    } else {
+      olderVideos.push(video);
+    }
+  }
+
+  // Tính số lượng video trung bình của 3 tháng gần đây và số lượng video trung bình của phần còn lại
+  const recentAverage = recentVideos.length / (90 / daysBetween);
+  const olderAverage = olderVideos.length / ((daysBetween - 90) / daysBetween);
+
+  // Tính lượng chênh lệch giữa số lượng video trung bình của 3 tháng gần đây và số lượng video trung bình của phần còn lại
+  const diffPercentage = ((recentAverage - olderAverage) / olderAverage) * 100;
+
+  // Dựa vào lượng chênh lệch, xác định xu hướng
+  if (diffPercentage > 100) {
+    return 'tăng nhanh';
+  } else if (diffPercentage > 30) {
+    return 'gia tăng';
+  } else if (diffPercentage > -30) {
+    return 'giữ nguyên';
+  } else if (diffPercentage > -50) {
+    return 'giảm xuống';
+  } else {
+    return 'giảm mạnh';
+  }
+}
+
 channelRouter.get("/:idchannel", async (req, res) => {
   try {
     const channelId = req.params.idchannel;
@@ -83,6 +132,8 @@ channelRouter.get("/:idchannel", async (req, res) => {
     const totalVideos = categories.map((month) => monthlyData[month].total);
     const negativeVideos = categories.map((month) => monthlyData[month].negative);
 
+    const trend = calculateTrend(videos);
+
     res.json({
       channel_name: channel.channel_name,
       video_count: videoCount,
@@ -93,6 +144,7 @@ channelRouter.get("/:idchannel", async (req, res) => {
         totalVideos,
         negativeVideos,
       },
+      trend: trend,
     });
   } catch (error) {
     console.error(error);

@@ -136,16 +136,20 @@ const SourceInfo = () => {
                     Số lượt tương tác trong ngày:{" "}
                     <span className="text-bold tag-span">{50}</span>
                   </p>
+                  <p style={{color: 'red'}}>
+                      Xu hướng của kênh:{" "}
+                      <span className="text-bold tag-span" style={{color: 'red'}}>{channelData["trend"]}</span>
+                    </p>
                 </div>
               </div>
               <div className="col-8 col-md-12">
                 <div className="card-chart full-height col-12">
                   {channelData.chartData && (<Chart
                     options={{
-                      chart: { type: "line", },
+                      chart: { type: "bar", },
                       xaxis: { categories: channelData.chartData.categories, },
                       title: { text: "Thống kê video theo tháng", },
-                      stroke: { curve: 'straight' },
+                      stroke: { curve: 'smooth' },
                       colors: ["#43c8ff", "#fb0b12"],
                     }}
                     series={[
@@ -159,7 +163,7 @@ const SourceInfo = () => {
                       },
                     ]}
                     height="300"
-                    type="line"
+                    type="bar"
                   />)}
                 </div>
               </div>

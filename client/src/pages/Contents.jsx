@@ -45,7 +45,7 @@ const customFormat = (value) => `${value.format(dateFormat)}`;
 const Contents = () => {
   const [searchKey, setSearchKey] = useState("");
 
-  const [option, setOption] = useState("");
+  const [option, setOption] = useState("default");
 
   const [params, setParams] = useState({});
 
@@ -115,7 +115,7 @@ const Contents = () => {
         <Message variant={"alert-warning"}>{error}</Message>
       ) : (
         <div>
-          <div className="mb-36 justify-div align-center">
+          <div className="mb-24 justify-div align-center">
             <Search
               value={searchKey}
               onChange={(e) => setSearchKey(e.target.value)}
@@ -123,13 +123,14 @@ const Contents = () => {
               handleEvent={handleSearchVideo}
             />
             <RangePicker
+            className="search"
               value={[dayjs(startdate, dateFormat), dayjs(enddate, dateFormat)]}
               onChange={(dates) => {
                 console.log('chang date: ', dates)
                 if (dates && dates.length === 2) {
                   setStartDate(dates[0]);
                   setEndDate(dates[1]);
-                  
+
                 } else {
                   setStartDate('2023-01-01');
                   setEndDate(dayjs().format(dateFormat));
@@ -137,14 +138,9 @@ const Contents = () => {
               }}
               format={customFormat}
             />
-            {videos.length > 0 && (
-              <p style={{ margin: 10, fontWeight: 600 }}>
-                Tìm thấy {videos.length} video.
-              </p>
-            )}
             <Select
-              className="selectFilter"
-              defaultValue="Toàn bộ video"
+              className="selectFilter search"
+              value={option}
               onChange={handleChangeOption}
               dropdownStyle={{ fontSize: 16, padding: 0 }}
             >
@@ -159,6 +155,11 @@ const Contents = () => {
               </Option>
             </Select>
           </div>
+          {videos.length > 0 && (
+            <p style={{ margin: 10, fontWeight: 600 , color: '#70757a'}}>
+              Tìm thấy {videos.length} video.
+            </p>
+          )}
           <div>
             <VideoGrid limit={8} videos={videos} />
           </div>

@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import ContentCard from "../content-card/ContentCard";
 import Button from "../button/Button";
 
-import contentList from "../../assets/JsonData/fake_data.json";
 import Message from "../loadingError/Error";
 
 const VideoGrid = (props) => {
@@ -15,8 +14,8 @@ const VideoGrid = (props) => {
 
   useEffect(() => {
     const getList = async () => {
-      setItems(props.videos.slice(0, props.limit));
-      setTotalPage(Math.ceil(props.videos.length / props.limit));
+      setItems(props.videos.slice(0, 2*props.limit));
+      setTotalPage(Math.ceil(props.videos.length / (2*props.limit)));
     };
     getList();
   }, [props.limit]);
@@ -39,7 +38,7 @@ const VideoGrid = (props) => {
         <Message variant={'alert-warning'}>Không tìm thấy video phù hợp</Message>
         : <div className="row">
           {items.map((item, index) => (
-            <div className="col-3 col-md-6 col-sm-12" key={index}>
+            <div className={"col-" + (props.limit === 3 ? "4" : "3") + " col-md-6 col-sm-12"} key={index}>
               <ContentCard
                 id={item._id}
                 channel={item.vd_channel}
