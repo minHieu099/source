@@ -12,12 +12,12 @@ videoRouter.get("/all", async (req, res) => {
     const react = req.query.react ? { vd_react: { $gte: 500 } } : {};
     const keyword = req.query.keyword
       ? {
-          $or: [
-            { vd_content: { $regex: req.query.keyword, $options: "i" } },
-            { vd_title: { $regex: req.query.keyword, $options: "i" } },
-            { vd_description: { $regex: req.query.keyword, $options: "i" } },
-          ],
-        }
+        $or: [
+          { vd_content: { $regex: req.query.keyword, $options: "i" } },
+          { vd_title: { $regex: req.query.keyword, $options: "i" } },
+          { vd_description: { $regex: req.query.keyword, $options: "i" } },
+        ],
+      }
       : {};
     const startdate = req.query.startdate;
     const enddate = req.query.enddate;
@@ -31,13 +31,14 @@ videoRouter.get("/all", async (req, res) => {
       };
     }
     const videos = label
-      ? await Video.find({ vd_label: label, ...react, ...keyword , ...dateFilter}).limit(8)
-      : await Video.find({ ...react, ...keyword, ...dateFilter }).limit(8);
+      ? await Video.find({ vd_label: label, ...react, ...keyword, ...dateFilter }).limit(20)
+      : await Video.find({ ...react, ...keyword, ...dateFilter }).limit(20);
     res.json(videos);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
+
 
 // Get video all tag
 videoRouter.get("/by-tag", async (req, res) => {
@@ -85,7 +86,7 @@ videoRouter.get("/followed", async (req, res) => {
           videos: { $push: "$$ROOT" }, // Lấy danh sách video được follow
           channels: { $addToSet: "$vd_channel" }, // Số channel tham gia đăng tải videos
           totalVideos: { $sum: 1 }, // Tổng số videos
-          negativeVideos: { $sum: { $cond: [{ $eq: ["$vd_label", 2] }, 1, 0] } }, // Số video tiêu cực
+          negativeVideos: { $sum: { $cond: [{ $eq: ["$vd_label", 0] }, 1, 0] } }, // Số video tiêu cực
           recentVideos: {
             $sum: {
               $cond: [
@@ -175,10 +176,10 @@ videoRouter.get("/followed", async (req, res) => {
 videoRouter.delete("/delete", async (req, res) => {
   try {
     await Video.deleteMany({});
-    res.status(200).json({ message: `Đã xóa toàn bộ video có`}) ;
+    res.status(200).json({ message: `Đã xóa toàn bộ video có` });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: `Đã xóa toàn bộ video có ${vd_tag}`});
+    res.status(500).json({ message: `Đã xóa toàn bộ video có ${vd_tag}` });
   }
 });
 //  get top negative video 

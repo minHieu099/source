@@ -7,7 +7,7 @@ const ContentCard = (props) => {
 
   const viewContentDetails = (item) => history.push("/video/" + props.id);
 
-  const cardBorder = `3px solid ${(props.type === 2) ? "#FF4560" : ((props.type === 1) ? "#00E396" : "#008FFB")}`
+  const cardBorder = `3px solid ${(props.type === 0) ? "#FF4560" : ((props.type === 1) ? "#00E396" : "#008FFB")}`
 
   return (
     <div className="content-card" style={{ border: cardBorder }}>

@@ -55,12 +55,8 @@ const Contents = () => {
 
   const { loading, videos, error } = videoList;
 
-  const [startdate, setStartDate] = useState('2023-01-01');
-  const [enddate, setEndDate] = useState(dayjs().format(dateFormat));
-
-  useEffect(() => {
-    dispatch(getListVideo());
-  }, [dispatch]);
+  const [startdate, setStartDate] = useState('2023-03-01');
+  const [enddate, setEndDate] = useState('2023-09-30');
 
   useEffect(() => {
     let params = {};
@@ -68,7 +64,8 @@ const Contents = () => {
       params = { ...params, keyword: searchKey };
     }
     if (option === "negative") {
-      params = { label: 2, ...params };
+      params = { label: 0, ...params };
+      console.log(params)
     } else if (option === "high_interaction") {
       params = { react: true, ...params };
     }
@@ -88,7 +85,7 @@ const Contents = () => {
       params = { ...params, keyword: searchKey };
     }
     if (option === "negative") {
-      params = { label: 2, ...params };
+      params = { label: 0, ...params };
     } else if (option === "high_interaction") {
       params = { react: true, ...params };
     }

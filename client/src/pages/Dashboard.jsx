@@ -34,7 +34,7 @@ const renderTagBody = (item, index) => (
 );
 
 const topSources = {
-  header: ["source name", "scanned videos", "source link"],
+  header: ["source name", "scanned videos"],
 };
 
 const renderSourceHead = (item, index) => <th key={index}>{item}</th>;

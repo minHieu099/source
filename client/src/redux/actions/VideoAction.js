@@ -7,25 +7,26 @@ export const getListVideo = (params) => async (dispatch) => {
 
     dispatch({ type: "VIDEO_LIST_REQUEST" });
 
-    let query = "";
+    let queryParams = [];
+    console.log("dut params qua",params)
     if (params?.keyword) {
-      query += `keyword=${params.keyword}`;
+      queryParams.push(`keyword=${params.keyword}`);
     }
-    if (params?.label) {
-      query += query.length
-        ? `&label=${params.label}`
-        : `label=${params.label}`;
+    if (params?.label !==undefined) {
+      queryParams.push(`label=${params.label}`);
+      console.log("Hien tai",queryParams)
     }
     if (params?.react) {
-      query += query.length
-        ? `&react=${params.react}`
-        : `react=${params.react}`;
+      queryParams.push(`react=${params.react}`);
     }
     if (params?.startdate && params?.enddate) {
-      query += `&startdate=${params.startdate}&enddate=${params.enddate}`;
+      queryParams.push(`startdate=${params.startdate}`);
+      queryParams.push(`enddate=${params.enddate}`);
     }
 
-    const { data } = await axios.get(`${URL}/api/videos/all?${query}`);
+    const queryString = queryParams.join('&');
+    console.log(queryString);
+    const { data } = await axios.get(`${URL}/api/videos/all?${queryString}`)
 
     dispatch({ type: "VIDEO_LIST_SUCCESS", payload: data });
   } catch (error) {

@@ -96,10 +96,10 @@ tagRouter.get("/:tagid", async (req, res) => {
       const date = new Date(video.vd_publishAt);
       const yearMonth = `T${date.getMonth() + 1}/${date.getFullYear()}`;
       if (monthlyData[yearMonth]) {
-        if (video.vd_label === 2) {
+        if (video.vd_label === 0) {
           monthlyData[yearMonth].negative++;
         }
-        if (video.vd_label === 0 || video.vd_label === 1) {
+        if (video.vd_label === 1 || video.vd_label === 2) {
           monthlyData[yearMonth].positiveNeutral++;
         }
       }
@@ -177,8 +177,8 @@ tagRouter.get("/report/:tagid", async (req, res) => {
 
     // Tính toán số lượng video theo các loại và danh sách các video nổi bật
     const positive_videos = videos.filter((video) => video.vd_label === 1);
-    const negative_videos = videos.filter((video) => video.vd_label === 2);
-    const neural_videos = videos.filter((video) => video.vd_label === 0);
+    const negative_videos = videos.filter((video) => video.vd_label === 0);
+    const neural_videos = videos.filter((video) => video.vd_label === 2);
     const positive_count = positive_videos.length;
     const negative_count = negative_videos.length;
     const neural_count = neural_videos.length;
@@ -209,7 +209,7 @@ tagRouter.get("/report/:tagid", async (req, res) => {
     // Lấy các kênh có nhiều video tiêu cực nhất
     const channel_negative_counts = {};
     videos
-      .filter((video) => video.vd_label === 2)
+      .filter((video) => video.vd_label === 0)
       .forEach((video) => {
         if (!channel_negative_counts[video.vd_channel]) {
           channel_negative_counts[video.vd_channel] = 1;

@@ -86,7 +86,7 @@ const ContentInfo = () => {
                   <Badge
                     className="text-bold"
                     type={
-                      video.vd_label === 0
+                      video.vd_label === 2
                         ? "primary"
                         : video.vd_label === 1
                           ? "success"
@@ -94,7 +94,7 @@ const ContentInfo = () => {
                     }
                     clickable={"none"}
                     content={
-                      video.vd_label === 2
+                      video.vd_label === 0
                         ? "Tiêu cực"
                         : video.vd_label === 1
                           ? "Tích cực"

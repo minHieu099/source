@@ -10,13 +10,14 @@ dashboardRouter.get("/", async (req, res) => {
     try {
         // Sort by top 7
         const videos = await Video.aggregate([
-            { $match: { vd_label: 2 } },
+            { $match: { vd_label: 0 } },
             { $sort: { vd_react: -1, vd_comment: -1 } },
             { $limit: 7 }
         ]);
         // Top channel all
         const by_channels_list = await Video.aggregate([
             { $unwind: "$vd_tag" },
+            { $match: { vd_label: 0 } },
             { $group: { _id: "$vd_channel", count: { $sum: 1 } } },
             { $sort: { count: -1 } },
         ]);

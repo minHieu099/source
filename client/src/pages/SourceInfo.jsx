@@ -57,7 +57,7 @@ const SourceInfo = () => {
           <Badge
             className="text-bold"
             type={
-              item.vd_label === 2
+              item.vd_label === 0
                 ? "danger"
                 : item.vd_label === 1
                   ? "success"
@@ -65,7 +65,7 @@ const SourceInfo = () => {
             }
             clickable={"none"}
             content={
-              item.vd_label === 2
+              item.vd_label === 0
                 ? "Tiêu cực"
                 : item.vd_label === 1
                   ? "Tích cực"

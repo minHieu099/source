@@ -123,7 +123,7 @@ channelRouter.get("/:idchannel", async (req, res) => {
       const yearMonth = `T${date.getMonth() + 1}/${date.getFullYear()}`;
       if (monthlyData[yearMonth]) {
         monthlyData[yearMonth].total++;
-        if (video.vd_label === 2) {
+        if (video.vd_label === 0) {
           monthlyData[yearMonth].negative++;
         }
       }
@@ -137,7 +137,7 @@ channelRouter.get("/:idchannel", async (req, res) => {
     res.json({
       channel_name: channel.channel_name,
       video_count: videoCount,
-      videos: videos.length > 8 ? videos.limit(8) : videos,
+      videos: videos.length > 8 ? videos.slice(0,8) : videos,
       channel_link: channel.channel_link,
       chartData: {
         categories,
@@ -226,8 +226,8 @@ channelRouter.get("/report/:channelId", async (req, res) => {
 
     const videos = await Video.find({ vd_channel: channel.channel_name });
     const positiveVideos = videos.filter((video) => video.vd_label === 1);
-    const negativeVideos = videos.filter((video) => video.vd_label === 2);
-    const neuralVideos = videos.filter((video) => video.vd_label === 0);
+    const negativeVideos = videos.filter((video) => video.vd_label === 0);
+    const neuralVideos = videos.filter((video) => video.vd_label === 2);
 
     const positiveCount = positiveVideos.length;
     const negativeCount = negativeVideos.length;
