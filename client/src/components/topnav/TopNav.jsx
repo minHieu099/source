@@ -44,7 +44,7 @@ const TopNav = () => {
   const refreshPage = () => {
     window.location.reload();
   };
-  
+
   return (
     <div className="topnav">
       <button className="btn btn-add" onClick={refreshPage}>
