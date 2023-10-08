@@ -14,8 +14,8 @@ const VideoGrid = (props) => {
 
   useEffect(() => {
     const getList = async () => {
-      setItems(props.videos.slice(0, 2*props.limit));
-      setTotalPage(Math.ceil(props.videos.length / (2*props.limit)));
+      setItems(props.videos.slice(0, props.limit));
+      setTotalPage(Math.ceil(props.videos.length / (props.limit)));
     };
     getList();
   }, [props.limit]);
@@ -53,7 +53,7 @@ const VideoGrid = (props) => {
       {page < totalPage ? (
         <div className="movie-grid__loadmore card__footer">
           <Button className=" btn" onClick={loadMore}>
-            Load more
+            Xem thêm
           </Button>
         </div>
       ) : null}

@@ -310,10 +310,11 @@ h2 {
   border-radius: 8px;
   width: 50%;
   float: left;
-  padding: 20px 20px;
+  padding: 30px;
   background: #fff;
   position: relative;
   text-align: center;
+  min-height: 190px;
 }
 .analysis-stats .analysis-stats-section:hover {
   background: #fbfbfb;

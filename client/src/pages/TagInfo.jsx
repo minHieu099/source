@@ -65,11 +65,16 @@ const TagInfo = () => {
         </div>
       ) : (
         <div>
-          <p className="section__header page-header">
-            Quản lý chủ đề / Chủ đề:{" "}
-            {console.log(tagData)}
-            <span className="tag-span">{tagData["vd_tag"]}</span>
-          </p>
+          <div className="row stretch__item justify-div">
+            <p className="section__header page-header">
+              Quản lý chủ đề / Chủ đề:{" "}
+              {console.log(tagData)}
+              <span className="tag-span">{tagData["vd_tag"]}</span>
+            </p>
+            <p style={{ margin: 10, fontWeight: 600, color: '#70757a' }}>
+              Dữ liệu lấy từ 01/03/2023 đến 30/09/2023
+            </p>
+          </div>
           <div className="col-12">
             <div className="card row">
               <div className="col-4 col-md-12">
@@ -89,9 +94,9 @@ const TagInfo = () => {
                     <span className="text-bold tag-span">{tagData["recentCount"]}</span>
                   </p>
                   {tagData["trend"] && (
-                    <p style={{color: 'red'}}>
+                    <p style={{ color: 'red' }}>
                       Xu hướng chủ đề:{" "}
-                      <span className="text-bold tag-span" style={{color: 'red'}}>{tagData["trend"]}</span>
+                      <span className="text-bold tag-span" style={{ color: 'red' }}>{tagData["trend"]}</span>
                     </p>
                   )}
                 </div>
@@ -156,15 +161,16 @@ const TagInfo = () => {
               <div className="card__header">
                 <p>Top các nội dung liên quan</p>
               </div>
-              <div className="card__header">
-                <TagReport tagId={tagid} />
-              </div>
             </div>
 
             <VideoGrid
               limit={8}
               videos={tagData["videos"] ? tagData["videos"] : []}
             />
+
+            <div className="card__header" style={{ textAlign: "-webkit-center" }}>
+              <TagReport tagId={tagid} />
+            </div>
           </div>
         </div>
       )}

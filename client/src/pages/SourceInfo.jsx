@@ -99,10 +99,15 @@ const SourceInfo = () => {
         </div>
       ) : (
         <div>
-          <p className="section__header page-header">
-            Quản lý kênh / Kênh{" "}
-            <span className="tag-span">{channelData["channel_name"]}</span>
-          </p>
+          <div className="row stretch__item justify-div">
+            <p className="section__header page-header">
+              Quản lý kênh / Kênh{" "}
+              <span className="tag-span">{channelData["channel_name"]}</span>
+            </p>
+            <p style={{ margin: 10, fontWeight: 600, color: '#70757a' }}>
+              Dữ liệu lấy từ 01/03/2023 đến 30/09/2023
+            </p>
+          </div>
           <div className="col-12">
             <div className="justify-div"></div>
             <div className="card row">
@@ -136,10 +141,10 @@ const SourceInfo = () => {
                     Số lượt tương tác trong ngày:{" "}
                     <span className="text-bold tag-span">{50}</span>
                   </p>
-                  <p style={{color: 'red'}}>
-                      Xu hướng của kênh:{" "}
-                      <span className="text-bold tag-span" style={{color: 'red'}}>{channelData["trend"]}</span>
-                    </p>
+                  <p style={{ color: 'red' }}>
+                    Xu hướng của kênh:{" "}
+                    <span className="text-bold tag-span" style={{ color: 'red' }}>{channelData["trend"]}</span>
+                  </p>
                 </div>
               </div>
               <div className="col-8 col-md-12">
@@ -173,9 +178,6 @@ const SourceInfo = () => {
                 <div className="card__header">
                   <p>Video của kênh</p>
                 </div>
-                <div className="card__header">
-                  <SourceReport channelId={channelid} />
-                </div>
               </div>
             </div>
             <div className="card row">
@@ -190,6 +192,9 @@ const SourceInfo = () => {
                   />
                 </div>
               </div>
+            </div>
+            <div className="card__header" style={{ textAlign: "-webkit-center" }}>
+              <SourceReport channelId={channelid} />
             </div>
           </div>
         </div>

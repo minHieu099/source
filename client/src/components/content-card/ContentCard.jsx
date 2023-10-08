@@ -27,13 +27,13 @@ const ContentCard = (props) => {
       <div className="row justify-div">
         <a href={props.url} target="_blank" rel="noreferrer">
           <button className="content-card_button" type="button">
-            Link
+            Đường dẫn
           </button>
         </a>
         <button className="content-card_button" onClick={viewContentDetails}>
           <p className="mb-0-5"></p>
           <i className="bx bx-search-alt mr-0-5"></i>
-          <span>Details
+          <span>Chi tiết
             <Link to={`/videos/${props._id}`}>
             </Link>
           </span>

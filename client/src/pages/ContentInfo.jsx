@@ -143,7 +143,7 @@ const ContentInfo = () => {
                   <a href={video.vd_link} target="_blank" rel="noreferrer">
                     <button className="btn btn-view btn-gotovideo">
                       <i className="bx bx-fast-forward"></i>
-                      Go to Video
+                      Chuyển hướng đến Youtube
                     </button>
                   </a>
                 </div>
