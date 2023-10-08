@@ -176,11 +176,11 @@ videoRouter.get("/followed", async (req, res) => {
 // Middleware để xóa các video có vd_tag là "ma ma"
 videoRouter.delete("/delete", async (req, res) => {
   try {
-    await Video.deleteMany({});
-    res.status(200).json({ message: `Đã xóa toàn bộ video có` });
+    await Video.deleteMany({ vd_tag: "800k" });
+    res.status(200).json({ message: `Đã xóa toàn bộ video có vd_tag là "800k"` });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: `Đã xóa toàn bộ video có ${vd_tag}` });
+    res.status(500).json({ message: `Đã xảy ra lỗi khi xóa video có vd_tag là "800k"` });
   }
 });
 //  get top negative video 
@@ -237,8 +237,8 @@ videoRouter.post("/:id", async (req, res) => {
 // Update all videos to vd_followed
 videoRouter.put("/update-all", async (req, res) => {
   try {
-    // Cập nhật video có vd_channel là "Luật sư Nguyễn Văn Đài-Kênh 3" thành vd_followed
-    await Video.updateMany({ vd_channel: "Luật sư Nguyễn Văn Đài-Kênh 3" }, { vd_followed: 1 });
+    // Cập nhật video có vd_channel là "Luật sư Nguyễn Văn Đài-Kênh3" thành vd_followed
+    await Video.updateMany({ vd_channel: "Luật sư Nguyễn Văn Đài-Kênh3" }, { vd_followed: 1 });
 
     // Trả về thông báo thành công
     res.json({ message: "Cập nhật thành công" });

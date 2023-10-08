@@ -21,7 +21,7 @@ import Loading from "../components/loadingError/Loading";
 import Message from "../components/loadingError/Error";
 
 const topTags = {
-  head: ["tag name", "scanned videos"],
+  head: ["Chủ đề", "Liên kết"],
 };
 
 const renderTagHead = (item, index) => <th key={index}>{item}</th>;
@@ -34,7 +34,7 @@ const renderTagBody = (item, index) => (
 );
 
 const topSources = {
-  header: ["source name", "scanned videos"],
+  header: ["Kênh", "Số lượng video", "Liên kết"],
 };
 
 const renderSourceHead = (item, index) => <th key={index}>{item}</th>;
