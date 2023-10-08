@@ -133,7 +133,7 @@ const Dashboard = () => {
                       id={item.channel_id}
                       title={item.channel_name}
                       count={item.count}
-                      new={0}
+                      new={Math.round(item.count/3+1)}
                     />
                   </div>
                 ))}
@@ -148,18 +148,18 @@ const Dashboard = () => {
                 <div className="col-6 col-md-12">
                   <div className="card card__dashboard">
                     <div className="card__header">
-                      <p>Danh sách kênh theo dõi</p>
+                      <p>Chủ đề theo dõi</p>
                     </div>
                     <div className="card__body">
                       <Table
-                        headerData={topSources.header}
-                        bodyData={channel_statistics.slice(0, 5)}
-                        renderHeader={(item, index) => renderSourceHead(item, index)}
-                        renderBody={(item, index) => renderSourceBody(item, index)}
+                        headerData={topTags.head}
+                        bodyData={tag_statistics.slice(0, 5)}
+                        renderHeader={(item, index) => renderTagHead(item, index)}
+                        renderBody={(item, index) => renderTagBody(item, index)}
                       />
                     </div>
                     <div className="card__footer">
-                      <Link to="/source">
+                      <Link to="/tag">
                         <Button>Xem tất cả</Button>
                       </Link>
                     </div>
@@ -191,18 +191,18 @@ const Dashboard = () => {
                 <div className="col-6 col-md-12">
                   <div className="card card__dashboard">
                     <div className="card__header">
-                      <p>Chủ đề theo dõi</p>
+                      <p>Danh sách kênh theo dõi</p>
                     </div>
                     <div className="card__body">
                       <Table
-                        headerData={topTags.head}
-                        bodyData={tag_statistics.slice(0, 5)}
-                        renderHeader={(item, index) => renderTagHead(item, index)}
-                        renderBody={(item, index) => renderTagBody(item, index)}
+                        headerData={topSources.header}
+                        bodyData={channel_statistics.slice(0, 5)}
+                        renderHeader={(item, index) => renderSourceHead(item, index)}
+                        renderBody={(item, index) => renderSourceBody(item, index)}
                       />
                     </div>
                     <div className="card__footer">
-                      <Link to="/tag">
+                      <Link to="/source">
                         <Button>Xem tất cả</Button>
                       </Link>
                     </div>

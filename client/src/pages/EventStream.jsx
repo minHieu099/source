@@ -104,11 +104,13 @@ const EventStream = () => {
                   <div class="analysis-stats-result stat_neg" >{videoStreams.negativeComments}</div>
                   <div class="analysis-stats-title">Bình luận tiêu cực</div>
                 </div>
+                <div className="card__header" style={{ textAlign: "-webkit-right", width: "100%", padding: "!unset" }}>
+                  <EventReport reportData={videoStreams} />
+                </div>
               </div>
             </div>
-            <div className="card__header" style={{ textAlign: "-webkit-center" }}>
-              <EventReport reportData={videoStreams} />
-            </div>
+
+
           </div>
         </div>
       </div>)

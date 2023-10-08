@@ -80,7 +80,7 @@ const SourceInfo = () => {
             onClick={() => viewContentDetails(item._id)}
             className="btn btn-view"
           >
-            <i className="bx bx-search-alt mr-0-5"></i>Details
+            <i className="bx bx-search-alt mr-0-5"></i>Chi tiết
           </button>
         </div>
       </td>

@@ -113,6 +113,7 @@ const Contents = () => {
       ) : (
         <div>
           <div className="mb-24 justify-div align-center">
+
             <Search
               value={searchKey}
               onChange={(e) => setSearchKey(e.target.value)}
@@ -120,7 +121,7 @@ const Contents = () => {
               handleEvent={handleSearchVideo}
             />
             <RangePicker
-            className="search"
+              className="search"
               value={[dayjs(startdate, dateFormat), dayjs(enddate, dateFormat)]}
               onChange={(dates) => {
                 console.log('chang date: ', dates)
@@ -153,8 +154,8 @@ const Contents = () => {
             </Select>
           </div>
           {videos.length > 0 && (
-            <p style={{ margin: 10, fontWeight: 600 , color: '#70757a'}}>
-              Tìm thấy {videos.length} video.
+            <p style={{ margin: 10, fontWeight: 600, color: '#70757a', fontSize: "16px" }}>
+              Kết quả: Tìm thấy {videos.length} video.
             </p>
           )}
           <div>

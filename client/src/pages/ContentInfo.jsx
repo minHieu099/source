@@ -37,17 +37,13 @@ const ContentInfo = () => {
 
   const { loading, video, error } = videoDetail;
 
-  const [selection, setSelection] = useState('0');
+  const [isDetected, setIsDetected] = useState(false);
 
   const handleToggleFollow = () => {
 
     dispatch(toggleFollow(video._id, !video.vd_followed));
   };
 
-  const handleChange = (event) => {
-    const selectedValue = event.target.value;
-    setSelection(selectedValue);
-  }
 
   useEffect(() => {
     dispatch(getVideoDetails(videoid));
@@ -191,20 +187,36 @@ const ContentInfo = () => {
             </div>
             <div className="card__header justify-div" style={{ alignItems: 'baseline' }}>
               <p>Thông tin video</p>
-              <select value={selection} onChange={handleChange}>
-                <option value='0'>Nội dung</option>
-                <option value='1'>Xem nhanh</option>
-                <option value='2'>Trích xuất thông tin</option>
-              </select>
+              {!isDetected ? (
+                <button
+                  className="btn btn-view btn-gotovideo mb-1"
+                  onClick={() => {
+                    setIsDetected(!isDetected);
+                  }}
+                >
+                  <i className="bx bx-transfer mr-0-5"></i>
+                  Phát hiện đối tượng
+                </button>
+              ) : (
+                <button
+                  className="btn btn-delete btn-gotovideo mb-1"
+                  onClick={() => {
+                    setIsDetected(!isDetected);
+                  }}
+                >
+                  <i className="bx bx-transfer mr-0-5"></i>
+                  Xem nhanh
+                </button>
+              )}
 
             </div>
             <div className="card row">
               <div className="card__body">
-                {selection === '2' && <CardNote />}
+                {isDetected ? <CardNote /> : null}
                 <p
                   className="text-content"
                   dangerouslySetInnerHTML={{
-                    __html: selection === '2' ? video.vd_highlight : video.vd_content,
+                    __html: isDetected  ? video.vd_highlight : video.vd_content,
                   }}
                 ></p>
               </div>
