@@ -16,6 +16,7 @@ videoRouter.get("/all", async (req, res) => {
           { vd_content: { $regex: req.query.keyword, $options: "i" } },
           { vd_title: { $regex: req.query.keyword, $options: "i" } },
           { vd_description: { $regex: req.query.keyword, $options: "i" } },
+          { vd_channel: { $regex: req.query.keyword, $options: "i" } },
         ],
       }
       : {};
@@ -31,8 +32,8 @@ videoRouter.get("/all", async (req, res) => {
       };
     }
     const videos = label
-      ? await Video.find({ vd_label: label, ...react, ...keyword, ...dateFilter }).limit(20)
-      : await Video.find({ ...react, ...keyword, ...dateFilter }).limit(20);
+      ? await Video.find({ vd_label: label, ...react, ...keyword, ...dateFilter }).limit(24)
+      : await Video.find({ ...react, ...keyword, ...dateFilter }).limit(24);
     res.json(videos);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -186,7 +187,19 @@ videoRouter.delete("/delete", async (req, res) => {
 videoRouter.get("/top-neg", async (req, res) => {
 
 });
+// Get all videos with vd_followed = 0
+videoRouter.get("/get_zero", async (req, res) => {
+  try {
+    // Tìm tất cả các video có vd_followed = 0
+    const videosWithZeroFollowed = await Video.find({ vd_followed: 1 });
 
+    // Trả về danh sách video
+    res.json(videosWithZeroFollowed);
+  } catch (error) {
+
+    res.status(500).json({ message: "Có lỗi trong quá trình xử lý" });
+  }
+});
 //  get single video
 videoRouter.get("/:id", async (req, res) => {
   try {
@@ -221,5 +234,19 @@ videoRouter.post("/:id", async (req, res) => {
     res.status(500).json({ message: "Có lỗi trong quá trình xử lý" });
   }
 });
+// Update all videos to vd_followed
+videoRouter.put("/update-all", async (req, res) => {
+  try {
+    // Cập nhật video có vd_channel là "Luật sư Nguyễn Văn Đài-Kênh 3" thành vd_followed
+    await Video.updateMany({ vd_channel: "Luật sư Nguyễn Văn Đài-Kênh 3" }, { vd_followed: 1 });
+
+    // Trả về thông báo thành công
+    res.json({ message: "Cập nhật thành công" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Có lỗi trong quá trình xử lý" });
+  }
+});
+
 
 export default videoRouter;

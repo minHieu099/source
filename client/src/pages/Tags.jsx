@@ -46,10 +46,10 @@ const Tags = () => {
   const tag_statistics =
     tags_list && by_tags_list
       ? tags_list.map((tag) => {
-          const foundTag = by_tags_list.find((item) => item._id === tag.vd_tag);
-          const count = foundTag ? foundTag.count : 0;
-          return { ...tag, count };
-        })
+        const foundTag = by_tags_list.find((item) => item._id === tag.vd_tag);
+        const count = foundTag ? foundTag.count : 0;
+        return { ...tag, count };
+      })
       : [];
 
   //  State add tag
