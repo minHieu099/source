@@ -18,6 +18,7 @@ import shuffleImage from '../assets/images/shuffle.png';
 import commentImage from '../assets/images/comment.png';
 import badReviewImage from '../assets/images/bad-review.png';
 import shareImage from '../assets/images/share-2.png';
+import EventReport from "./EventReport";
 
 
 const EventStream = () => {
@@ -42,72 +43,75 @@ const EventStream = () => {
         </div>
       ) : error ? (
         <Message variant={"alert-warning"}>{error}</Message>
-      ) : videoStreams[0] ? (
-        <div>
-          <div className="row stretch__item justify-div">
-            <p className="section__header"></p>
-            <p style={{ margin: 10, fontWeight: 600, color: '#70757a' }}>
-              Dữ liệu lấy từ 01/03/2023 đến 30/09/2023
-            </p>
+      ) : (videoStreams === null || (Array.isArray(videoStreams) && videoStreams.length === 0) || (typeof videoStreams === "object" && Object.keys(videoStreams).length === 0)) ? (
+        <p>Không có dữ liệu</p>
+
+      ) : (<div>
+        <div className="row stretch__item justify-div">
+          <p className="section__header"></p>
+          <p style={{ margin: 10, fontWeight: 600, color: '#70757a' }}>
+            Dữ liệu lấy từ 01/03/2023 đến 30/09/2023
+          </p>
+        </div>
+        <div className="row" style={{ alignItems: 'start' }}>
+          <div className="col-9 col-md-12">
+            {videoStreams.videos.length > 0 ? (
+              <VideoGrid videos={videoStreams.videos} limit={3} />
+            ) : (
+              <div>Không có dữ liệu</div>
+            )}
           </div>
-          <div className="row" style={{ alignItems: 'start' }}>
-            <div className="col-9 col-md-12">
-              {videoStreams[0].videos.length > 0 ? (
-                <VideoGrid videos={videoStreams[0].videos} limit={3} />
-              ) : (
-                <div>Không có dữ liệu</div>
-              )}
-            </div>
-            <div className="col-3 col-md-12">
-              <div className="card" style={{ padding: '0' }}>
-                {console.log(videoStreams[0].videos)}
-                <div class="analysis-stats" id="stats">
-                  <div class="analysis-stats-section">
-                    <img src={tutorialImage} />
-                    <div class="analysis-stats-result" >{videoStreams[0].channels}</div>
-                    <div class="analysis-stats-title">Tổng số kênh</div>
-                  </div>
-                  <div class="analysis-stats-section">
-                    <img src={playImage} />
-                    <div class="analysis-stats-result" >{videoStreams[0].totalVideos}</div>
-                    <div class="analysis-stats-title">Số video</div>
-                  </div>
-                  <div class="analysis-stats-section">
-                    <img src={minusImage} />
-                    <div class="analysis-stats-result stat_pos" >{videoStreams[0].negativeVideos}</div>
-                    <div class="analysis-stats-title">Số video tiêu cực</div>
-                  </div>
-                  <div class="analysis-stats-section">
-                    <img src={shareImage} />
-                    <div class="analysis-stats-result" >{videoStreams[0].recentVideos}</div>
-                    <div class="analysis-stats-title">Số video gần đây</div>
-                  </div>
-                  <div class="analysis-stats-section">
-                    <img src={likeImage} />
-                    <div class="analysis-stats-result" >{videoStreams[0].totalReacts}</div>
-                    <div class="analysis-stats-title">Lượng tương tác</div>
-                  </div>
-                  <div class="analysis-stats-section">
-                    <img src={shuffleImage} />
-                    <div class="analysis-stats-result">{videoStreams[0].shares}</div>
-                    <div class="analysis-stats-title">Lượng chia sẻ</div>
-                  </div>
-                  <div class="analysis-stats-section">
-                    <img src={commentImage} />
-                    <div class="analysis-stats-result" >{videoStreams[0].totalComments}</div>
-                    <div class="analysis-stats-title">Lượng bình luận</div>
-                  </div>
-                  <div class="analysis-stats-section">
-                    <img src={badReviewImage} />
-                    <div class="analysis-stats-result stat_neg" >{videoStreams[0].negativeComments}</div>
-                    <div class="analysis-stats-title">Bình luận tiêu cực</div>
-                  </div>
+          <div className="col-3 col-md-12">
+            <div className="card" style={{ padding: '0' }}>
+              <div class="analysis-stats" id="stats">
+                <div class="analysis-stats-section">
+                  <img src={tutorialImage} />
+                  <div class="analysis-stats-result" >{videoStreams.channels ? videoStreams.channels.length : 0}</div>
+                  <div class="analysis-stats-title">Tổng số kênh</div>
+                </div>
+                <div class="analysis-stats-section">
+                  <img src={playImage} />
+                  <div class="analysis-stats-result" >{videoStreams.totalVideos}</div>
+                  <div class="analysis-stats-title">Số video</div>
+                </div>
+                <div class="analysis-stats-section">
+                  <img src={minusImage} />
+                  <div class="analysis-stats-result stat_pos" >{videoStreams.negativeVideos}</div>
+                  <div class="analysis-stats-title">Số video tiêu cực</div>
+                </div>
+                <div class="analysis-stats-section">
+                  <img src={shareImage} />
+                  <div class="analysis-stats-result" >{videoStreams.recentVideos}</div>
+                  <div class="analysis-stats-title">Số video gần đây</div>
+                </div>
+                <div class="analysis-stats-section">
+                  <img src={likeImage} />
+                  <div class="analysis-stats-result" >{videoStreams.totalReacts}</div>
+                  <div class="analysis-stats-title">Lượng tương tác</div>
+                </div>
+                <div class="analysis-stats-section">
+                  <img src={shuffleImage} />
+                  <div class="analysis-stats-result">{videoStreams.shares}</div>
+                  <div class="analysis-stats-title">Lượng chia sẻ</div>
+                </div>
+                <div class="analysis-stats-section">
+                  <img src={commentImage} />
+                  <div class="analysis-stats-result" >{videoStreams.totalComments}</div>
+                  <div class="analysis-stats-title">Lượng bình luận</div>
+                </div>
+                <div class="analysis-stats-section">
+                  <img src={badReviewImage} />
+                  <div class="analysis-stats-result stat_neg" >{videoStreams.negativeComments}</div>
+                  <div class="analysis-stats-title">Bình luận tiêu cực</div>
                 </div>
               </div>
             </div>
+            <div className="card__header" style={{ textAlign: "-webkit-center" }}>
+              <EventReport reportData={videoStreams} />
+            </div>
           </div>
         </div>
-      ) : (<p>Không có dữ liệu</p>)
+      </div>)
       }
     </>
   );

@@ -72,7 +72,6 @@ videoRouter.get("/by-channel", async (req, res) => {
   }
 })
 
-//  get all video follow 
 videoRouter.get("/followed", async (req, res) => {
   try {
     const pipeline = [
@@ -110,7 +109,8 @@ videoRouter.get("/followed", async (req, res) => {
         $project: {
           _id: 0,
           videos: 1,
-          channels: { $size: "$channels" },
+          channels: 1,
+          channelInfo: 1, // Thêm thông tin về channels
           totalVideos: 1,
           negativeVideos: 1,
           recentVideos: 1,
@@ -158,6 +158,68 @@ videoRouter.get("/followed", async (req, res) => {
           }, // Số comment gần đây
         },
       },
+      {
+        $lookup: {
+          from: "videos", // Tên collection chứa thông tin về videos
+          let: { videoId: "$videos._id" },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $in: ["$_id", "$$videoId"],
+                },
+              },
+            },
+            {
+              $sort: { vd_react: -1, vd_comment: -1 },
+            },
+            {
+              $limit: 8,
+            },
+          ],
+          as: "topVideos",
+        },
+      },
+      {
+        $lookup: {
+          from: "videos", // Tên collection chứa thông tin về videos
+          let: { channelNames: "$channels" },
+          pipeline: [
+            {
+              $match: {
+                vd_followed: 1,
+              },
+            },
+            {
+              $group: {
+                _id: "$vd_channel",
+                totalVideos: { $sum: 1 },
+                negativeVideos: { $sum: { $cond: [{ $eq: ["$vd_label", 0] }, 1, 0] } },
+              },
+            },
+          ],
+          as: "channelInfo",
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          videos: 1,
+          channels: 1,
+          channelInfo: 1,
+          totalVideos: 1,
+          negativeVideos: 1,
+          recentVideos: 1,
+          totalComments: 1,
+          totalReacts: 1,
+          shares: 1,
+          negativeComments: 1,
+          positiveComments: 1,
+          recentComments: 1,
+          topVideos: 1,
+          channelStats: 1, // Thêm thông tin về channelStats
+        },
+      },
     ];
 
     const result = await Video.aggregate(pipeline);
@@ -166,12 +228,12 @@ videoRouter.get("/followed", async (req, res) => {
       return res.status(404).json({ message: "Không có video nào được follow" });
     }
 
-    // Trả về danh sách video được follow cùng với thông tin khác
-    res.json(result);
+    // Trả về kết quả với thông tin đã tính toán và channelStats
+    res.json(result[0]);
   } catch (error) {
     res.status(400).json({ message: "Có lỗi trong quá trình xử lý" });
   }
-});;
+});
 
 // Middleware để xóa các video có vd_tag là "ma ma"
 videoRouter.delete("/delete", async (req, res) => {
