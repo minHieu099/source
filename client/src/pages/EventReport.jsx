@@ -124,7 +124,7 @@ const EventReport = ({ reportData }) => {
                     </table>
                 )}
 
-                
+
 
                 <p style={{ textIndent: '10.0mm' }} ><b>Các video nổi bật trong sự kiện:</b></p>
                 {reportData.topVideos === 0 ? (
@@ -175,6 +175,20 @@ const EventReport = ({ reportData }) => {
                         ))}
                     </table>
                 )}
+
+                <p style={{ textIndent: '10.0mm' }} ><b>Các hashtag liên quan đến sự kiện:</b> {reportData.topHashtags ? reportData.topHashtags[0].topHashtags.join(', ') : ""}</p>
+                <p style={{ textIndent: '10.0mm' }} ><b>Các điều hướng liên quan:</b></p>
+                {reportData.topLinks.length === 0 ? (
+                    <p style={{ textIndent: '20.0mm' }} >Chưa có thông tin</p>
+                ) : (<>
+                    {reportData.topLinks[0].topLinks.map((navigation, index) => (
+                        <p style={{ textIndent: '20.0mm' }}>
+                            <a href={navigation} target="_blank">
+                                {navigation}
+                            </a>
+                        </p>
+                    ))}</>
+                )}
                 <table className="MsoTableGrid" border="0" cellSpacing="0" cellPadding="0" style={{ borderCollapse: 'collapse', border: 'hidden' }}>
                     <tr>
                         <td width="312" valign="top" style={{ width: '233.75pt', padding: '0mm 5.4pt 0mm 5.4pt' }}>
@@ -200,7 +214,7 @@ const EventReport = ({ reportData }) => {
                 </table>
                 <p style={{ marginTop: '6.0pt', marginRight: '0mm', marginBottom: '0mm', marginLeft: '0mm', textIndent: '10.0mm', lineHeight: '150%' }}>
                     <b><span style={{ fontSize: '14.0pt', lineHeight: '150%' }}>&nbsp;</span></b>
-                </p> 
+                </p>
             </div>
         </div >
         <Modal

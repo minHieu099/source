@@ -201,6 +201,65 @@ videoRouter.get("/followed", async (req, res) => {
           as: "channelInfo",
         },
       },
+      // Bước này để lấy danh sách liên kết từ các video được follow
+      {
+        $lookup: {
+          from: "videos", // Tên collection chứa thông tin về videos
+          let: { videoIds: "$videos._id" },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $in: ["$_id", "$$videoIds"],
+                },
+              },
+            },
+            {
+              $unwind: "$vd_links"
+            },
+            {
+              $group: {
+                _id: null,
+                topLinks: { $addToSet: "$vd_links" }
+              }
+            },
+            {
+              $limit: 8,
+            },
+          ],
+          as: "topLinks",
+        },
+      },
+
+      // Bước này để lấy danh sách hashtag từ các video được follow
+      {
+        $lookup: {
+          from: "videos", // Tên collection chứa thông tin về videos
+          let: { videoIds: "$videos._id" },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $in: ["$_id", "$$videoIds"],
+                },
+              },
+            },
+            {
+              $unwind: "$vd_hashtags"
+            },
+            {
+              $group: {
+                _id: null,
+                topHashtags: { $addToSet: "$vd_hashtags" }
+              }
+            },
+            {
+              $limit: 8,
+            },
+          ],
+          as: "topHashtags",
+        },
+      },
       {
         $project: {
           _id: 0,
@@ -217,6 +276,8 @@ videoRouter.get("/followed", async (req, res) => {
           positiveComments: 1,
           recentComments: 1,
           topVideos: 1,
+          topLinks: 1,
+          topHashtags: 1,
           channelStats: 1, // Thêm thông tin về channelStats
         },
       },
