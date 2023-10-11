@@ -114,6 +114,12 @@ const ContentInfo = () => {
                     content={video.vd_tag}
                   />
                 </div>
+                {video.vd_followed ? <p className="text-bold">
+                  Lần cập nhật cuối :{" "}
+                  <span className="text-bold tag-span">
+                    {video.vd_lastupdated}
+                  </span>
+                </p>:null}
                 <div className="row gap-20">
                   {video.vd_followed === 0 ? (
                     <button
@@ -216,7 +222,7 @@ const ContentInfo = () => {
                 <p
                   className="text-content"
                   dangerouslySetInnerHTML={{
-                    __html: isDetected  ? video.vd_highlight : video.vd_content,
+                    __html: isDetected ? video.vd_highlight : video.vd_content,
                   }}
                 ></p>
               </div>

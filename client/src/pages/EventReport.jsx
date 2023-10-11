@@ -70,12 +70,12 @@ const EventReport = ({ reportData }) => {
         <div className="WordSection1" style={{ display: 'none' }}>
             <div style={{ width: 'fit-content', marginLeft: 'calc(50% - 340px)' }} id="baoCao">
                 <p style={{}}><b>HỌC VIỆN KỸ THUẬT QUÂN SỰ</b></p>
-                <p style={{ textAlign: 'right' }} align="right" ><i>Hà Nội, ngày {date.getDate()} tháng {date.getMonth()} năm {date.getFullYear()}</i></p>
+                <p style={{ textAlign: 'right' }} align="right" ><i>Hà Nội, ngày {date.getDate()} tháng {10} năm {date.getFullYear()}</i></p>
                 <p style={{ textAlign: 'center' }} align="center" ><i>&nbsp;</i></p>
                 <p style={{ textAlign: 'center' }} align="center" ><b>BÁO CÁO THEO DÕI LUỒNG SỰ KIỆN</b></p>
                 <p style={{ textAlign: 'center' }} align="center" ><i>&nbsp;</i></p>
                 <p style={{ textIndent: '10.0mm' }} ><b>Tên luồng sự kiện: {eventName}</b></p>
-                <p style={{ textIndent: '10.0mm' }} ><b>Ngày trinh sát: {date.getDate()}/{date.getMonth()}/{date.getFullYear()}</b></p>
+                <p style={{ textIndent: '10.0mm' }} ><b>Ngày trinh sát: {date.getDate()}/{10}/{date.getFullYear()}</b></p>
                 <p style={{ textIndent: '10.0mm' }} ><b>Lượng video được theo dõi:</b> {reportData.totalVideos}</p>
                 <p style={{ textIndent: '10.0mm' }} ><b>Lượng video tiêu cực trong sự kiện:</b> {reportData.negativeVideos}</p>
                 <p style={{ textIndent: '10.0mm' }} ><b>Lượng video thu thập gần đây:</b> {reportData.recentVideos}</p>
